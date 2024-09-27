@@ -1,0 +1,56 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/navIntroFragment">
+
+    <fragment
+        tools:layout="@layout/fragment_intro"
+        android:id="@+id/navIntroFragment"
+        android:name="eu.mcomputng.mobv.zadanie.IntroFragment">
+        <action
+            android:id="@+id/action_intro_to_login"
+            app:destination="@id/navLoginFragment" />
+        <argument
+            android:name="argument"
+            app:argType="string"
+            android:defaultValue="default" />
+        <action
+            android:id="@+id/action_intro_to_register"
+            app:destination="@id/navRegisterFragment" />
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_login"
+        android:id="@+id/navLoginFragment"
+        android:name="eu.mcomputng.mobv.zadanie.LoginFragment">
+        <action
+            android:id="@+id/action_login_to_map"
+            app:destination="@id/navMapFragment" />
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_register"
+        android:id="@+id/navRegisterFragment"
+        android:name="eu.mcomputng.mobv.zadanie.RegisterFragment">
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_feed"
+        android:id="@+id/navFeedFragment"
+        android:name="eu.mcomputng.mobv.zadanie.FeedFragment">
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_profile"
+        android:id="@+id/navProfileFragment"
+        android:name="eu.mcomputng.mobv.zadanie.ProfileFragment">
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_map"
+        android:id="@+id/navMapFragment"
+        android:name="eu.mcomputng.mobv.zadanie.MapFragment">
+    </fragment>
+
+</navigation>
