@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
         android:text="@string/username_textview"
         android:textSize="15sp"
+        style="@style/login_and_register_style"
         app:layout_constraintTop_toBottomOf="@+id/login_textview"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/username_edittext"
@@ -49,9 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
         android:text="@string/password_textview"
-        android:textSize="15sp"
+        style="@style/login_and_register_style"
         app:layout_constraintTop_toBottomOf="@+id/username_edittext"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/password_edittext"
@@ -79,10 +78,6 @@
         app:layout_constraintTop_toBottomOf="@+id/password_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         />
-    <eu.mcomputng.mobv.zadanie.CustomConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

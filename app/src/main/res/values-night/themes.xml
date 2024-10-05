@@ -4,4 +4,11 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+    <!-- App theme (dark version)-->
+    <style name="AppTheme.LightDark" parent="Base.AppTheme.LightDark">
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/light_blue_900</item>
+        <item name="colorSecondary">@color/green_900</item>
+        <item name="android:textViewStyle">@style/MyTextViewStyleDark</item>
+    </style>
 </resources>
