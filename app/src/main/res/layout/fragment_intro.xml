@@ -11,17 +11,18 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aplikácia"
+        android:text="@string/app_name"
+        android:textSize="25sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/prihlasenie_main"
+        android:text="@string/login"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/register_button_main"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
         android:id="@+id/register_button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/registracia_main"
+        android:text="@string/registration"
         style="@style/button_secondary_color"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintStart_toEndOf="@+id/login_button_main"

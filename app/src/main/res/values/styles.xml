@@ -10,12 +10,15 @@
         <item name="android:textColor">@color/light_blue_400</item>
     </style>
     <style name="MyTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="MyTextViewStyleLight" parent="MyTextViewStyle">
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="MyTextViewStyleDark" parent="MyTextViewStyle">
         <item name="android:textColor">@color/gray_600</item>
+    </style>
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:height">5dp</item>
     </style>
 </resources>

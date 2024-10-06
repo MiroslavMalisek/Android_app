@@ -9,6 +9,8 @@
 
     <style name="Base.AppTheme.LightDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
     </style>
     <!-- App theme (light version)-->
     <style name="AppTheme.LightDark" parent="Base.AppTheme.LightDark">

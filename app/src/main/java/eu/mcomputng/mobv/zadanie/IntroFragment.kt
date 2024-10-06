@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 
 class IntroFragment : Fragment() {
 
@@ -17,7 +18,7 @@ class IntroFragment : Fragment() {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_intro, container, false)
         val view = inflater.inflate(R.layout.fragment_intro, container, false)
-        val login_button: Button = view.findViewById(R.id.login_button_main)
+        val login_button: MaterialButton = view.findViewById(R.id.login_button_main)
         login_button.setOnClickListener {
             findNavController().navigate(R.id.action_intro_to_login)
         }

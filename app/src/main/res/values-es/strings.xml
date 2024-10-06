@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MOBV tarea</string>
+    <string name="register">Registrar</string>
+    <string name="email_textview">Correo electrónico:</string>
+    <string name="email_hint">Introduce tu correo</string>
+    <string name="username_textview">Username:</string>
+    <string name="username_hint">Introduce tu username</string>
+    <string name="password_textview">Contraseňa:</string>
+    <string name="password_hint">Introduce tu contraseňa</string>
+    <string name="password_repeat_textview">Repite la contraseňa</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="registration">Registración</string>
+    <string name="log_in">Iniciar sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoibWlyZWMzMDAiLCJhIjoiY20xbDllNDI4MDVrNzJqcXZvZm83OGF3byJ9.vxwsTRLEq3Ypnm7TmH2FYQ</string>
+    <string name="description">Descripción</string>
+    <string name="snackbar_text">Este es un texto de snackbar</string>
+</resources>

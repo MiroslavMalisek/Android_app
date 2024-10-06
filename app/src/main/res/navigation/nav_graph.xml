@@ -33,6 +33,9 @@
         tools:layout="@layout/fragment_register"
         android:id="@+id/navRegisterFragment"
         android:name="eu.mcomputng.mobv.zadanie.RegisterFragment">
+        <action
+            android:id="@+id/action_register_to_intro"
+            app:destination="@id/navIntroFragment"/>
     </fragment>
 
     <fragment

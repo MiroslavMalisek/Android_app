@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MOBV Zadanie</string>
+    <string name="register">Registrovať</string>
+    <string name="email_textview">Email:</string>
+    <string name="email_hint">Zadajte email</string>
+    <string name="username_textview">Username:</string>
+    <string name="username_hint">Zadajte username</string>
+    <string name="password_textview">Heslo:</string>
+    <string name="password_hint">Zadajte heslo</string>
+    <string name="password_repeat_textview">Zopakujte heslo</string>
+    <string name="login">Prihlásenie</string>
+    <string name="registration">Registrácia</string>
+    <string name="log_in">Prihlásiť</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoibWlyZWMzMDAiLCJhIjoiY20xbDllNDI4MDVrNzJqcXZvZm83OGF3byJ9.vxwsTRLEq3Ypnm7TmH2FYQ</string>
+    <string name="description">popis</string>
+    <string name="snackbar_text">Toto je snackbar text</string>
+</resources>
