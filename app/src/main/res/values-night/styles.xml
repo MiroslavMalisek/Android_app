@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyBottomNavBarBackground">
+        <item name="android:background">@color/gray_900</item>
+    </style>
+    <style name="MyTextViewStyleDark" parent="MyTextViewStyle">
+        <item name="android:textColor">@color/gray_600</item>
+    </style>
+    <style name="MyBottomNavBarIconsColor" parent="MyBottomNavBarIcons">
+        <item name="android:tint">@color/gray_600</item>
+    </style>
+</resources>

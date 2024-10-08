@@ -6,8 +6,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FeedFragment">
 
-    <eu.mcomputng.mobv.zadanie.CustomConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

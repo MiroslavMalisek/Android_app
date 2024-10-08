@@ -42,18 +42,36 @@
         tools:layout="@layout/fragment_feed"
         android:id="@+id/navFeedFragment"
         android:name="eu.mcomputng.mobv.zadanie.FeedFragment">
+        <action
+            android:id="@+id/action_feed_to_map"
+            app:destination="@id/navMapFragment"/>
+        <action
+            android:id="@+id/action_feed_to_profile"
+            app:destination="@id/navProfileFragment"/>
     </fragment>
 
     <fragment
         tools:layout="@layout/fragment_profile"
         android:id="@+id/navProfileFragment"
         android:name="eu.mcomputng.mobv.zadanie.ProfileFragment">
+        <action
+            android:id="@+id/action_profile_to_map"
+            app:destination="@id/navMapFragment"/>
+        <action
+            android:id="@+id/action_profile_to_feed"
+            app:destination="@id/navFeedFragment"/>
     </fragment>
 
     <fragment
         tools:layout="@layout/fragment_map"
         android:id="@+id/navMapFragment"
         android:name="eu.mcomputng.mobv.zadanie.MapFragment">
+        <action
+            android:id="@+id/action_map_to_feed"
+            app:destination="@id/navFeedFragment"/>
+        <action
+            android:id="@+id/action_map_to_profile"
+            app:destination="@id/navProfileFragment"/>
     </fragment>
 
 </navigation>

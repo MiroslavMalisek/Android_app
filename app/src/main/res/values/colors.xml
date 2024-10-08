@@ -2,10 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <item name="gray_200" type="color">#EEEEEE</item>
     <item name="gray_600" type="color">#757575</item>
+    <item name="gray_900" type="color">#212121</item>
     <item name="light_blue_400" type="color">#29B6F6</item>
     <item name="light_blue_900" type="color">#01579B</item>
     <item name="green_400" type="color">#66BB6A</item>
-    <item name="green_900" type="color">#1B5E20
-    </item>
+    <item name="green_900" type="color">#1B5E20</item>
 </resources>
