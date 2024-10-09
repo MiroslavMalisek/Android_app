@@ -26,6 +26,6 @@
         <item name="android:layout_height">50dp</item>
     </style>
     <style name="MyBottomNavBarIconsColor" parent="MyBottomNavBarIcons">
-        <item name="android:tint">@color/gray_600</item>
+        <item name="android:tint">@color/icon_inactive</item>
     </style>
 </resources>

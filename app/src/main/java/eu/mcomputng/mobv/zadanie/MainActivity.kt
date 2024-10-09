@@ -16,6 +16,8 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
+    private var bottomBarVisible = false
+    private lateinit var bottomNavBar: CustomConstraintLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,11 +30,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
 
         // Get the bottom navigation bar view
-        val bottomNavBar: CustomConstraintLayout = findViewById(R.id.bottom_bar)
+        bottomNavBar = findViewById(R.id.bottom_bar)
+        //pass navController to the bottom navigation to be able to navigate between fragments
+        bottomNavBar.setNavController(navController)
 
-        //change
+        //on every screen change, check if bottom bar should be visible
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            bottomNavBar.updateVisibilityAndColorForFragment(destination.id)
+            this.updateBottomNavBarVisibility(destination.id)
         }
 
 
@@ -47,4 +51,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 */  }
+
+    private fun updateBottomNavBarVisibility(destinationId: Int){
+        if (Utils.fragmentsWithBottomBar.contains(destinationId)){
+            if (!bottomBarVisible){
+                bottomNavBar.postDelayed({
+                    bottomNavBar.visibility = View.VISIBLE
+                }, 200)
+            }
+            bottomBarVisible = true
+        }
+        else{
+            bottomNavBar.visibility = View.GONE
+            bottomBarVisible = false
+        }
+    }
 }

@@ -9,4 +9,6 @@
     <item name="light_blue_900" type="color">#01579B</item>
     <item name="green_400" type="color">#66BB6A</item>
     <item name="green_900" type="color">#1B5E20</item>
+    <item name="icon_active" type="color">#FFCDD2</item>
+    <item name="icon_inactive" type="color">@color/gray_600</item>
 </resources>
