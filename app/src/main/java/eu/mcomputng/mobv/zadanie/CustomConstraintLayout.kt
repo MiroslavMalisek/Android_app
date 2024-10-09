@@ -17,13 +17,21 @@ import com.google.android.material.snackbar.Snackbar
 class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var navController: NavController
     init {
+        //TODO init urobi iba raz, treba asi listenery
         val view = LayoutInflater.from(context).inflate(R.layout.bottom_bar_layout, this, true)
-        val map_icon: ImageView = findViewById(R.id.map_icon)
-        this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, map_icon)
-        val feed_icon: ImageView = findViewById(R.id.feed_icon)
-        this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feed_icon)
-        val profile_icon: ImageView = findViewById(R.id.profile_icon)
-        this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profile_icon)
+        if (::navController.isInitialized){
+            Log.d("nav", "kontrola bottombaru")
+            val map_icon: ImageView = findViewById(R.id.map_icon)
+            this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, map_icon)
+            val feed_icon: ImageView = findViewById(R.id.feed_icon)
+            this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feed_icon)
+            val profile_icon: ImageView = findViewById(R.id.profile_icon)
+            this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profile_icon)
+        }
+        else{
+            Log.d("nav", "zle")
+        }
+
 
 
 
