@@ -16,20 +16,24 @@ import com.google.android.material.snackbar.Snackbar
 
 class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var navController: NavController
+    private lateinit var activeIcon: ImageView
     init {
-        //TODO init urobi iba raz, treba asi listenery
         val view = LayoutInflater.from(context).inflate(R.layout.bottom_bar_layout, this, true)
-        if (::navController.isInitialized){
-            Log.d("nav", "kontrola bottombaru")
-            val map_icon: ImageView = findViewById(R.id.map_icon)
-            this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, map_icon)
-            val feed_icon: ImageView = findViewById(R.id.feed_icon)
-            this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feed_icon)
-            val profile_icon: ImageView = findViewById(R.id.profile_icon)
-            this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profile_icon)
+        val mapIcon: ImageView = findViewById(R.id.map_icon)
+        this.activeIcon = mapIcon
+        mapIcon.setOnClickListener{
+            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, mapIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navMapFragment, mapIcon)
         }
-        else{
-            Log.d("nav", "zle")
+        val feedIcon: ImageView = findViewById(R.id.feed_icon)
+        feedIcon.setOnClickListener{
+            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feedIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navFeedFragment, feedIcon)
+        }
+        val profileIcon: ImageView = findViewById(R.id.profile_icon)
+        profileIcon.setOnClickListener{
+            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profileIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navProfileFragment, profileIcon)
         }
 
 
@@ -60,13 +64,45 @@ class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : Co
         this.navController = navController
     }
 
-    private fun updateIconColor(currentDestId: Int?, iconNavFragment: Int, icon: ImageView){
-        if (currentDestId == iconNavFragment){
-            icon.imageTintList = ContextCompat.getColorStateList(context, R.color.icon_active)
+    private fun navigateToFragment(currentFragment: Int?, destinationFragment: Int, icon: ImageView){
+        if (currentFragment != destinationFragment){
+            this.updateIconsColor(icon)
+            val action: Int = this.decideAction(currentFragment, destinationFragment)
+            //dont save fragments with bottom bar to back stash
+            this.navController.navigate(action, null, Utils.options)
+        }
+    }
+
+    private fun decideAction(currentFragment: Int?, destinationFragment: Int): Int{
+        if ((currentFragment == R.id.navMapFragment) && (destinationFragment == R.id.navFeedFragment)){
+            return R.id.action_map_to_feed
+        }
+        else if ((currentFragment == R.id.navMapFragment) && (destinationFragment == R.id.navProfileFragment)){
+            return R.id.action_map_to_profile
+        }
+        else if ((currentFragment == R.id.navProfileFragment) && (destinationFragment == R.id.navMapFragment)){
+            return R.id.action_profile_to_map
+        }
+        else if ((currentFragment == R.id.navProfileFragment) && (destinationFragment == R.id.navFeedFragment)){
+            return R.id.action_profile_to_feed
+        }
+        else if ((currentFragment == R.id.navFeedFragment) && (destinationFragment == R.id.navMapFragment)){
+            return R.id.action_feed_to_map
         }
         else{
-            icon.imageTintList = ContextCompat.getColorStateList(context, R.color.icon_inactive)
+            //feed to profile
+            return R.id.action_feed_to_profile
         }
+    }
+
+    private fun updateIconsColor(icon: ImageView){
+        this.activeIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_inactive))
+        this.activeIcon = icon
+        icon.setColorFilter(ContextCompat.getColor(context, R.color.icon_active))
+    }
+
+    fun restoreActiveIcon(){
+        this.activeIcon = findViewById(R.id.map_icon)
     }
     /*fun updateVisibilityAndColorForFragment(destinationId: Int) {
         Log.d("update", destinationId.toString())

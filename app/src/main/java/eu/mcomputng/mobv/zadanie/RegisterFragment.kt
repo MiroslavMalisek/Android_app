@@ -21,7 +21,7 @@ class RegisterFragment : Fragment() {
             Snackbar.make(view, R.string.snackbar_text, Snackbar.LENGTH_LONG)
                 .setAction("Home"){
                     findNavController().navigate(R.id.action_register_to_intro)
-                }
+                }.setAnchorView(R.id.fab)
                 .show()
         }
         return view

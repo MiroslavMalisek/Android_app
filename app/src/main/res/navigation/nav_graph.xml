@@ -10,11 +10,13 @@
         android:name="eu.mcomputng.mobv.zadanie.IntroFragment">
         <action
             android:id="@+id/action_intro_to_login"
-            app:destination="@id/navLoginFragment" />
-        <argument
-            android:name="argument"
-            app:argType="string"
-            android:defaultValue="default" />
+            app:destination="@id/navLoginFragment">
+            <argument
+                android:name="argument"
+                app:argType="string"
+                android:defaultValue="default" />
+        </action>
+
         <action
             android:id="@+id/action_intro_to_register"
             app:destination="@id/navRegisterFragment" />

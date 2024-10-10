@@ -1,14 +1,17 @@
 package eu.mcomputng.mobv.zadanie
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import eu.mcomputng.mobv.zadanie.CustomConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -52,9 +55,22 @@ class MainActivity : AppCompatActivity() {
         }
 */  }
 
+    private fun updateInitialBottomBarIconColor(){
+        val mapIcon: ImageView = findViewById(R.id.map_icon)
+        mapIcon.setColorFilter(ContextCompat.getColor(this, R.color.icon_active))
+        val feedIcon: ImageView = findViewById(R.id.feed_icon)
+        feedIcon.setColorFilter(ContextCompat.getColor(this, R.color.icon_inactive))
+        val ProfileIcon: ImageView = findViewById(R.id.profile_icon)
+        ProfileIcon.setColorFilter(ContextCompat.getColor(this, R.color.icon_inactive))
+
+    }
+
     private fun updateBottomNavBarVisibility(destinationId: Int){
         if (Utils.fragmentsWithBottomBar.contains(destinationId)){
             if (!bottomBarVisible){
+                this.updateInitialBottomBarIconColor()
+                //set active icon to default (map)
+                this.bottomNavBar.restoreActiveIcon()
                 bottomNavBar.postDelayed({
                     bottomNavBar.visibility = View.VISIBLE
                 }, 200)
