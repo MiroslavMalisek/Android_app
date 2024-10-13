@@ -43,7 +43,7 @@
     <fragment
         tools:layout="@layout/fragment_feed"
         android:id="@+id/navFeedFragment"
-        android:name="eu.mcomputng.mobv.zadanie.FeedFragment">
+        android:name="eu.mcomputng.mobv.zadanie.feed.FeedFragment">
         <action
             android:id="@+id/action_feed_to_map"
             app:destination="@id/navMapFragment"/>
