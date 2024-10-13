@@ -22,15 +22,17 @@ class FeedFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_feed, container, false)
 
         val bottomBar = requireActivity().findViewById<ConstraintLayout>(R.id.bottom_bar)
-        //val constraintLayout = view as ConstraintLayout
-        val fragmentRootView = view.findViewById<ConstraintLayout>(R.id.fragment_feed_root)
-
-        Log.d("bar_id", bottomBar.id.toString())
         val recyclerView = view.findViewById<RecyclerView>(R.id.feed_recyclerview)
-        Log.d("layout_before", (fragmentRootView.layoutParams as ConstraintLayout.LayoutParams).bottomToTop.toString())
-        // bottom of Recycler view to top of bottom bar
+        // Set bottom margin of RecyclerView to match top of Bottom Navigation Bar
+        val layoutParams = recyclerView.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.bottomMargin = bottomBar.height
+        recyclerView.layoutParams = layoutParams
 
-        /*val constraintSet = ConstraintSet()
+        //using inner constraint layout and bottom to top
+        /*val fragmentRootView = view.findViewById<ConstraintLayout>(R.id.fragment_feed_root)
+        Log.d("bar_id", bottomBar.id.toString())
+        Log.d("layout_before", (fragmentRootView.layoutParams as ConstraintLayout.LayoutParams).bottomToTop.toString())
+        val constraintSet = ConstraintSet()
         constraintSet.clone(fragmentRootView)
         constraintSet.connect(
             fragmentRootView.id, // The ID of the fragment's root view
@@ -38,16 +40,17 @@ class FeedFragment : Fragment() {
             bottomBar.id, // The ID of the bottom bar to constrain to
             ConstraintSet.TOP // The edge of the bottom bar to constrain to
         )
-
-        constraintSet.applyTo(fragmentRootView)*/
-
-        val layoutParams = fragmentRootView.layoutParams as ConstraintLayout.LayoutParams
+        constraintSet.applyTo(fragmentRootView)
+        */
+        //another way
+        /*val layoutParams = fragmentRootView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.bottomToTop = bottomBar.id
+         */
+        // straight to RV
+        /*recyclerView.layoutParams = layoutParams
+         */
+        //Log.d("layout_after", (view.findViewById<ConstraintLayout>(R.id.fragment_feed_root).layoutParams as ConstraintLayout.LayoutParams).bottomToTop.toString())
 
-
-        //layoutParams.bottomToTop = bottomBar.id
-        //recyclerView.layoutParams = layoutParams
-        Log.d("layout_after", (view.findViewById<ConstraintLayout>(R.id.fragment_feed_root).layoutParams as ConstraintLayout.LayoutParams).bottomToTop.toString())
 
         val layoutManager = LinearLayoutManager(context)
         //layoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -59,6 +62,9 @@ class FeedFragment : Fragment() {
             ItemModel(R.drawable.file_foreground,"File"),
             ItemModel(R.drawable.person_foreground,"Person"),
             ItemModel(R.drawable.ic_add_white_foreground,"Launcher"),
+            ItemModel(R.drawable.map_foreground,"Launcher"),
+            ItemModel(R.drawable.map_foreground,"Launcher"),
+            ItemModel(R.drawable.map_foreground,"Launcher"),
             ItemModel(R.drawable.map_foreground,"Launcher"),
             ItemModel(R.drawable.map_foreground,"Launcher"),
             ItemModel(R.drawable.map_foreground,"Launcher"),
