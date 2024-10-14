@@ -5,10 +5,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import eu.mcomputng.mobv.zadanie.R
 
-data class ItemModel(val imageResId: Int, val text: String)
+//data class ItemModel(val imageResId: Int, val text: String)
+data class ItemModel(val id: Int, val imageResId: Int, val text: String){
+    override fun equals(other: Any?): Boolean {
+        if (this === other){
+            return true
+        }
+        if (javaClass != other?.javaClass) {
+            return false
+        }
+        other as ItemModel
+        if (id != other.id) return false
+        if (imageResId != other.imageResId) return false
+        if (text != other.text) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + imageResId
+        result = 31 * result + text.hashCode()
+        return result
+    }
+}
 
 class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
     private var items: List<ItemModel> = listOf()
@@ -35,7 +59,14 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
     }
 
     fun updateItems(newItems: List<ItemModel>) {
-        items = newItems
+        /*items = newItems
         notifyDataSetChanged()
+        */
+
+        val diffCallback = CustomRVDiffCallback(items, newItems)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        items = newItems
+        diffResult.dispatchUpdatesTo(this)
     }
 }
