@@ -17,10 +17,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private var bottomBarVisible = false
     private lateinit var bottomNavBar: CustomConstraintLayout
+    private lateinit var fab: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,11 +39,13 @@ class MainActivity : AppCompatActivity() {
         bottomNavBar = findViewById(R.id.bottom_bar)
         //pass navController to the bottom navigation to be able to navigate between fragments
         bottomNavBar.setNavController(navController)
-
         //on every screen change, check if bottom bar should be visible
         navController.addOnDestinationChangedListener { _, destination, _ ->
             this.updateBottomNavBarVisibility(destination.id)
         }
+
+        this.fab = findViewById(R.id.fab)
+        this.fabVisibilityListener()
 
 
 /*        val register_button: Button = findViewById(R.id.register_button_main)
@@ -80,6 +85,20 @@ class MainActivity : AppCompatActivity() {
         else{
             bottomNavBar.visibility = View.GONE
             bottomBarVisible = false
+        }
+    }
+
+    private fun fabVisibilityListener() {
+        // Add OnBackStackChangedListener to listen for fragment transactions
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment.childFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = navHostFragment.childFragmentManager.fragments.lastOrNull()
+            // Check if the current fragment is one with fab visible
+            if (currentFragment != null && Utils.fragmentsWithFabVisible.contains(currentFragment::class.java)) {
+                fab.visibility = View.VISIBLE
+            } else {
+                fab.visibility = View.GONE
+            }
         }
     }
 }

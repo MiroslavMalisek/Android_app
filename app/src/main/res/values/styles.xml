@@ -28,4 +28,7 @@
     <style name="MyBottomNavBarIconsColor" parent="MyBottomNavBarIcons">
         <item name="android:tint">@color/icon_inactive</item>
     </style>
+    <style name="RecyclerViewIconColor">
+        <item name="android:tint">?attr/colorPrimary</item>
+    </style>
 </resources>

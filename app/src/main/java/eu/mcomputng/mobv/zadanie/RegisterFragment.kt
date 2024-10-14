@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 class RegisterFragment : Fragment() {
@@ -16,6 +17,8 @@ class RegisterFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_register, container, false)
+        //val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
+        //fab.visibility = View.VISIBLE
         val register_button: Button = view.findViewById(R.id.register_button)
         register_button.setOnClickListener{
             Snackbar.make(view, R.string.snackbar_text, Snackbar.LENGTH_LONG)

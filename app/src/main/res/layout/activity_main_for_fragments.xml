@@ -29,7 +29,8 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_bar"
         android:layout_margin="16dp"
         app:srcCompat="@drawable/ic_add_white_foreground"
-        app:maxImageSize="35dp"/>
+        app:maxImageSize="35dp"
+        android:visibility="gone"/>
 
     <eu.mcomputng.mobv.zadanie.CustomConstraintLayout
         android:id="@+id/bottom_bar"
