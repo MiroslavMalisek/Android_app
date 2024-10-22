@@ -69,4 +69,9 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
         items = newItems
         diffResult.dispatchUpdatesTo(this)
     }
+
+    fun addItem(newItem: ItemModel){
+        val newItems = items + newItem
+        this.updateItems(newItems)
+    }
 }

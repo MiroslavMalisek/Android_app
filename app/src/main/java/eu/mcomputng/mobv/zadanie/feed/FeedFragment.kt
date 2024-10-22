@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 
@@ -85,6 +86,11 @@ class FeedFragment : Fragment() {
             ))
         }
 
+        val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener{
+            Log.d("fab", "click")
+            feedAdapter.addItem(ItemModel(20, R.drawable.map_foreground,"New Item"),)
+        }
         return view
     }
 }

@@ -7,7 +7,7 @@
     </style>
     <style name="button_secondary_color" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">?attr/colorSecondary</item>
-        <item name="android:textColor">@color/light_blue_400</item>
+        <item name="android:textColor">@color/gray_600</item>
     </style>
     <style name="MyTextViewStyle" parent="android:Widget.TextView">
         <item name="android:textSize">14sp</item>
