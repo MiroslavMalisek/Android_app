@@ -1,4 +1,4 @@
-package eu.mcomputng.mobv.zadanie.feed
+package eu.mcomputng.mobv.zadanie.fragments.feed
 
 import androidx.recyclerview.widget.DiffUtil
 

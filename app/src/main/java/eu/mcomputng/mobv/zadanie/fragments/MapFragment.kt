@@ -1,4 +1,4 @@
-package eu.mcomputng.mobv.zadanie
+package eu.mcomputng.mobv.zadanie.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.fragment.findNavController
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
+import eu.mcomputng.mobv.zadanie.R
 
 class MapFragment : Fragment() {
     private var mapView: MapView? = null

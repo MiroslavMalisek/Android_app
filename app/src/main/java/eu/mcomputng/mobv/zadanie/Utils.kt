@@ -2,7 +2,10 @@ package eu.mcomputng.mobv.zadanie
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.navOptions
-import eu.mcomputng.mobv.zadanie.feed.FeedFragment
+import eu.mcomputng.mobv.zadanie.fragments.feed.FeedFragment
+import eu.mcomputng.mobv.zadanie.fragments.MapFragment
+import eu.mcomputng.mobv.zadanie.fragments.ProfileFragment
+import org.mindrot.jbcrypt.BCrypt
 
 object Utils {
     val fragmentsWithBottomBar = setOf(R.id.navMapFragment, R.id.navFeedFragment, R.id.navProfileFragment)
@@ -12,9 +15,12 @@ object Utils {
         }
     }
     val fragmentsWithFabVisible: Set<Class<out Fragment>> = setOf(
-        RegisterFragment::class.java,
         MapFragment::class.java,
         FeedFragment::class.java,
         ProfileFragment::class.java
     )
+
+    fun hashPassword(password: String): String {
+        return BCrypt.hashpw(password, BCrypt.gensalt())
+    }
 }

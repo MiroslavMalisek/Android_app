@@ -15,6 +15,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "MOBV_API_KEY",
+            "\"${project.findProperty("MOBV_API_KEY")}\""
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -46,7 +56,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     val fragment_version = "2.3.5"
-    implementation("androidx.navigation:navigation-fragment-ktx:$fragment_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$fragment_version")
-    implementation("com.mapbox.maps:android:10.16.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.android)
+    val lifecycle_version = "2.8.7"
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation (libs.retrofit)
+    implementation (libs.gson)
+    implementation (libs.converter.gson)
+    implementation (libs.jbcrypt)
 }

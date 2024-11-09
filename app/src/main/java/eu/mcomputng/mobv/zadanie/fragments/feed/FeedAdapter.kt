@@ -1,4 +1,4 @@
-package eu.mcomputng.mobv.zadanie.feed
+package eu.mcomputng.mobv.zadanie.fragments.feed
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,18 +1,14 @@
-package eu.mcomputng.mobv.zadanie
+package eu.mcomputng.mobv.zadanie.bottomBar
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
+import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.Utils
 
 class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var navController: NavController
@@ -23,17 +19,20 @@ class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : Co
         this.activeIcon = mapIcon
         mapIcon.setOnClickListener{
             //this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, mapIcon)
-            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navMapFragment, mapIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id,
+                R.id.navMapFragment, mapIcon)
         }
         val feedIcon: ImageView = findViewById(R.id.feed_icon)
         feedIcon.setOnClickListener{
             //this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feedIcon)
-            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navFeedFragment, feedIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id,
+                R.id.navFeedFragment, feedIcon)
         }
         val profileIcon: ImageView = findViewById(R.id.profile_icon)
         profileIcon.setOnClickListener{
             //this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profileIcon)
-            this.navigateToFragment(this.navController.currentDestination?.id, R.id.navProfileFragment, profileIcon)
+            this.navigateToFragment(this.navController.currentDestination?.id,
+                R.id.navProfileFragment, profileIcon)
         }
 
 

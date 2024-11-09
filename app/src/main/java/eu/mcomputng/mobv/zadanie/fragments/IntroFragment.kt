@@ -1,7 +1,6 @@
-package eu.mcomputng.mobv.zadanie
+package eu.mcomputng.mobv.zadanie.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import eu.mcomputng.mobv.zadanie.R
 
 class IntroFragment : Fragment() {
 

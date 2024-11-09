@@ -5,7 +5,7 @@
     android:id="@+id/main_fragments"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <!-- NavHostFragment to hold and manage navigation between fragments -->
     <fragment
@@ -32,7 +32,7 @@
         app:maxImageSize="35dp"
         android:visibility="gone"/>
 
-    <eu.mcomputng.mobv.zadanie.CustomConstraintLayout
+    <eu.mcomputng.mobv.zadanie.bottomBar.CustomConstraintLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

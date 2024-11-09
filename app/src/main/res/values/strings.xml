@@ -7,7 +7,7 @@
     <string name="username_hint">Input your username</string>
     <string name="password_textview">Password:</string>
     <string name="password_hint">Input your password</string>
-    <string name="password_repeat_textview">Repeat the password</string>
+    <string name="password_repeat_textview">Repeat the password:</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="log_in">Log in</string>
@@ -17,4 +17,14 @@
     <string name="description">Description</string>
     <string name="snackbar_text">This is a snackbar text</string>
     <string name="updateRVButton">Update Items</string>
+    <string name="registerErrorRepeatPassword">Passwords do not match</string>
+    <string name="registerErrorEmptyEmail">Email can not be empty</string>
+    <string name="registerErrorEmptyUsername">Name can not be empty</string>
+    <string name="registerErrorEmptyPassword">Password can not be empty</string>
+    <string name="registerErrorUsernameExists">Username already exists</string>
+    <string name="registerErrorEmailExists">Email is already in use</string>
+    <string name="registerErrorUserFailed">Registration failed. Try again...</string>
+    <string name="registerErrorNetwork">Failed to create user. Check your internet connection.</string>
+    <string name="registerErrorUnexpected">An unexpected error occurred. Try again...</string>
+    <string name="registerSuccess">Registration was successful</string>
 </resources>

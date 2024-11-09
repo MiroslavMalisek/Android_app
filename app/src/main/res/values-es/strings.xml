@@ -8,7 +8,7 @@
     <string name="username_hint">Introduce tu username</string>
     <string name="password_textview">Contraseňa:</string>
     <string name="password_hint">Introduce tu contraseňa</string>
-    <string name="password_repeat_textview">Repite la contraseňa</string>
+    <string name="password_repeat_textview">Repite la contraseňa:</string>
     <string name="login">Inicio de sesión</string>
     <string name="registration">Registración</string>
     <string name="log_in">Iniciar sesión</string>
@@ -18,4 +18,14 @@
     <string name="description">Descripción</string>
     <string name="snackbar_text">Este es un texto de snackbar</string>
     <string name="updateRVButton">Actualizar Elementos</string>
+    <string name="registerErrorRepeatPassword">Contraseňas no son iguales</string>
+    <string name="registerErrorEmptyEmail">Email no puede estar vacío</string>
+    <string name="registerErrorEmptyUsername">El Username no puede estra vacío</string>
+    <string name="registerErrorEmptyPassword">La contraseňa no puede estar vacía</string>
+    <string name="registerErrorUsernameExists">El Username ya existe</string>
+    <string name="registerErrorEmailExists">Email ya está en el uso</string>
+    <string name="registerErrorUserFailed">Registración ha fallado. Inténtelo de nuevo...</string>
+    <string name="registerErrorNetwork">Registración ha fallado. Pruebe la conexión al internet.</string>
+    <string name="registerErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
+    <string name="registerSuccess">La registración ha sido exitosa</string>
 </resources>

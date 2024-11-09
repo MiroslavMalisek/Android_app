@@ -5,7 +5,7 @@
     android:id="@+id/login_fr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".fragments.LoginFragment">
 
     <TextView
         android:id="@+id/login_textview"
@@ -25,11 +25,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/login_textview"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/password_edittext"
+        app:layout_constraintBottom_toTopOf="@+id/password_textview"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
         android:hint="@string/username_hint"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -41,38 +40,38 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/password_textview"
-        style="@style/login_and_register_style"
         app:layout_constraintTop_toBottomOf="@+id/username_textview"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/password_edittext"
-        />
-    <EditText
-        android:id="@+id/password_edittext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
         android:hint="@string/password_hint"
-        app:layout_constraintTop_toBottomOf="@+id/password_textview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edittext"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/log_in"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/password_textview"
         app:layout_constraintEnd_toEndOf="parent"
         />
 

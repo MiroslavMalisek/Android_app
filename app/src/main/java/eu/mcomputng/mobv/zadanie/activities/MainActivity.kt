@@ -1,24 +1,19 @@
-package eu.mcomputng.mobv.zadanie
+package eu.mcomputng.mobv.zadanie.activities
 
-import android.content.Intent
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import eu.mcomputng.mobv.zadanie.CustomConstraintLayout
+import eu.mcomputng.mobv.zadanie.bottomBar.CustomConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.Utils
 
 class MainActivity : AppCompatActivity() {
     private var bottomBarVisible = false

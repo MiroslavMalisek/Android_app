@@ -8,7 +8,7 @@
     <string name="username_hint">Zadajte username</string>
     <string name="password_textview">Heslo:</string>
     <string name="password_hint">Zadajte heslo</string>
-    <string name="password_repeat_textview">Zopakujte heslo</string>
+    <string name="password_repeat_textview">Zopakujte heslo:</string>
     <string name="login">Prihlásenie</string>
     <string name="registration">Registrácia</string>
     <string name="log_in">Prihlásiť</string>
@@ -18,4 +18,15 @@
     <string name="description">popis</string>
     <string name="snackbar_text">Toto je snackbar text</string>
     <string name="updateRVButton">Aktualizovať položky</string>
+    <string name="registerErrorRepeatPassword">Heslá sa nezhodujú</string>
+    <string name="registerErrorEmptyUsername">Meno nesmie byť prázne</string>
+    <string name="registerErrorEmptyEmail">Email nemôže byť prázdny</string>
+    <string name="registerErrorEmptyPassword">Heslo nemôže byť prázdne</string>
+    <string name="registerErrorUsernameExists">Zadaný username už existuje</string>
+    <string name="registerErrorEmailExists">Zadaný email sa už používa</string>
+    <string name="registerErrorUserFailed">Registrácia sa nepodarila. Skúste to znovu...</string>
+    <string name="registerErrorNetwork">Registrácia sa nepodarila. Skontrolujte pripojenie na internet.</string>
+    <string name="registerErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
+    <string name="registerSuccess">Registrácia bola úspešná</string>
+
 </resources>
