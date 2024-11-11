@@ -18,7 +18,6 @@ import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.viewModels.AuthViewModel
-import eu.mcomputng.mobv.zadanie.Utils.hashPassword
 
 class RegisterFragment : Fragment() {
 
@@ -35,14 +34,14 @@ class RegisterFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
             override fun <T : ViewModel>create(modelClass: Class<T>): T {
-                return AuthViewModel(DataRepository.getInstance()) as T
+                return AuthViewModel(DataRepository.getInstance(requireContext())) as T
             }
         })[AuthViewModel::class.java]
 
         viewModel.registrationResult.observe(viewLifecycleOwner) { result ->
             //Log.d("user", (result.user).toString())
             //registration successful
-            if (result.user != null) {
+            if (result.localUser != null) {
                 Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_register_to_feed)
             } else {
@@ -61,7 +60,7 @@ class RegisterFragment : Fragment() {
                     requireContext(),
                     view.findViewById<EditText>(R.id.username_edittext).text.toString(),
                     view.findViewById<EditText>(R.id.email_edittext).text.toString(),
-                    hashPassword(password)
+                    password
                 )
             }
         }

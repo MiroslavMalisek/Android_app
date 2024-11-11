@@ -1,6 +1,6 @@
 package eu.mcomputng.mobv.zadanie.data.models
 
-data class RegistrationResultPair(
+data class LoginResultPair (
     val message: String,
     val localUser: LocalUser? = null
 )

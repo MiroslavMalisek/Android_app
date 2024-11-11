@@ -5,7 +5,7 @@ import androidx.navigation.navOptions
 import eu.mcomputng.mobv.zadanie.fragments.feed.FeedFragment
 import eu.mcomputng.mobv.zadanie.fragments.MapFragment
 import eu.mcomputng.mobv.zadanie.fragments.ProfileFragment
-import org.mindrot.jbcrypt.BCrypt
+import java.security.MessageDigest
 
 object Utils {
     val fragmentsWithBottomBar = setOf(R.id.navMapFragment, R.id.navFeedFragment, R.id.navProfileFragment)
@@ -21,6 +21,8 @@ object Utils {
     )
 
     fun hashPassword(password: String): String {
-        return BCrypt.hashpw(password, BCrypt.gensalt())
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hashBytes = digest.digest(password.toByteArray())
+        return hashBytes.joinToString("") { "%02x".format(it) }
     }
 }

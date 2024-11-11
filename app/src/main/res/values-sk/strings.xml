@@ -18,6 +18,8 @@
     <string name="description">popis</string>
     <string name="snackbar_text">Toto je snackbar text</string>
     <string name="updateRVButton">Aktualizovať položky</string>
+
+
     <string name="registerErrorRepeatPassword">Heslá sa nezhodujú</string>
     <string name="registerErrorEmptyUsername">Meno nesmie byť prázne</string>
     <string name="registerErrorEmptyEmail">Email nemôže byť prázdny</string>
@@ -29,4 +31,16 @@
     <string name="registerErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
     <string name="registerSuccess">Registrácia bola úspešná</string>
 
+
+    <string name="loginErrorEmptyUsername">Username (email) nesmie byť prázny</string>
+    <string name="loginErrorEmptyPassword">Heslo nemôže byť prázdne</string>
+    <string name="loginErrorLoginFailed">Nesprávny Username (email) alebo heslo</string>
+    <string name="loginErrorUserFailed">Prihlásenie sa nepodarilo. Skúste to znovu...</string>
+    <string name="loginErrorNetwork">Prihlásenie sa nepodarilo. Skontrolujte pripojenie na internet.</string>
+    <string name="loginErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
+    <string name="loginSuccess">Prihlásenie bolo úspešné</string>
+
+    <string name="userErrorGetUserFailed">Používateľov sa nepodarilo získať</string>
+    <string name="userErrorNetwork">Používateľov sa nepodarilo získať. Skontrolujte pripojenie na internet.</string>
+    <string name="userErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
 </resources>

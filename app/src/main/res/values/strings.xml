@@ -17,6 +17,8 @@
     <string name="description">Description</string>
     <string name="snackbar_text">This is a snackbar text</string>
     <string name="updateRVButton">Update Items</string>
+
+
     <string name="registerErrorRepeatPassword">Passwords do not match</string>
     <string name="registerErrorEmptyEmail">Email can not be empty</string>
     <string name="registerErrorEmptyUsername">Name can not be empty</string>
@@ -27,4 +29,16 @@
     <string name="registerErrorNetwork">Failed to create user. Check your internet connection.</string>
     <string name="registerErrorUnexpected">An unexpected error occurred. Try again...</string>
     <string name="registerSuccess">Registration was successful</string>
+
+    <string name="loginErrorEmptyUsername">Name (email) can not be empty</string>
+    <string name="loginErrorEmptyPassword">Password can not be empty</string>
+    <string name="loginErrorLoginFailed">Incorrect Username (email) or password</string>
+    <string name="loginErrorUserFailed">Log in failed. Try again...</string>
+    <string name="loginErrorNetwork">Failed to create user. Check your internet connection.</string>
+    <string name="loginErrorUnexpected">An unexpected error occurred. Try again...</string>
+    <string name="loginSuccess">Log in was successful</string>
+
+    <string name="userErrorGetUserFailed">Failed to load users</string>
+    <string name="userErrorNetwork">Failed to load users. Check your internet connection.</string>
+    <string name="userErrorUnexpected">An unexpected error occurred. Try again...</string>
 </resources>

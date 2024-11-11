@@ -3,11 +3,13 @@ package eu.mcomputng.mobv.zadanie.data.models
 import com.google.gson.Gson
 import java.io.IOException
 
-data class User (
+data class LocalUser(
+    val username: String,
+    val email: String,
     val id: String,
-    val name: String,
-    val photo: String = ""
-){
+    val access: String,
+    val refresh: String
+    ){
     fun toJson(): String? {
         return try {
             Gson().toJson(this)
@@ -18,9 +20,9 @@ data class User (
     }
 
     companion object {
-        fun fromJson(string: String): User? {
+        fun fromJson(string: String): LocalUser? {
             return try {
-                Gson().fromJson(string, User::class.java)
+                Gson().fromJson(string, LocalUser::class.java)
             } catch (ex: IOException) {
                 ex.printStackTrace()
                 null
