@@ -10,7 +10,7 @@ import java.security.MessageDigest
 object Utils {
     val fragmentsWithBottomBar = setOf(R.id.navMapFragment, R.id.navFeedFragment, R.id.navProfileFragment)
     val options = navOptions {
-        popUpTo(R.id.navLoginFragment) {
+        popUpTo(R.id.navIntroFragment) {
             inclusive = false  // Do not remove the main page from the stack
         }
     }

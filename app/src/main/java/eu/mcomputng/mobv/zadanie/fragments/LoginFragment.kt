@@ -16,46 +16,49 @@ import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
+import eu.mcomputng.mobv.zadanie.databinding.FragmentLoginBinding
 import eu.mcomputng.mobv.zadanie.viewModels.AuthViewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var viewModel: AuthViewModel
+    private var binding: FragmentLoginBinding? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity(), object : ViewModelProvider.Factory {
-            override fun <T : ViewModel>create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return AuthViewModel(DataRepository.getInstance(requireContext())) as T
             }
         })[AuthViewModel::class.java]
+    }
 
-        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            Log.d("user", (result.localUser).toString())
-            //registration successful
-            if (result.localUser != null) {
-                PreferenceData.getInstance().putUser(requireContext(), result.localUser)
-                Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
-                viewModel.getUser(requireContext(), "20")
-                //findNavController().navigate(R.id.action_register_to_feed)
-            } else {
-                Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentLoginBinding.bind(view).apply {
+            lifecycleOwner = viewLifecycleOwner
+            model = viewModel
+        }.also { bnd ->
+            viewModel.loginResult.observe(viewLifecycleOwner) { result ->
+                Log.d("user", (result.localUser).toString())
+                //registration successful
+                if (result.localUser != null) {
+                    PreferenceData.getInstance().putUser(requireContext(), result.localUser)
+                    Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
+                    //viewModel.getUser(requireContext(), "20")
+                    viewModel.getGeofence(requireContext())
+                    findNavController().navigate(R.id.action_login_to_map)
+                } else {
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                }
             }
         }
+    }
 
-        val loginButton: Button = view.findViewById(R.id.login_button)
-        loginButton.setOnClickListener{
-            viewModel.loginUser(
-                requireContext(),
-                view.findViewById<EditText>(R.id.username_edittext).text.toString(),
-                view.findViewById<EditText>(R.id.password_edittext).text.toString()
-            )
-        }
-        return view
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 }
