@@ -74,4 +74,5 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     kapt("androidx.room:room-compiler:$room_version")
     implementation(libs.androidx.room.ktx)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }

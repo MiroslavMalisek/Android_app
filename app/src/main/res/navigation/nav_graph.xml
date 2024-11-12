@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_profile_to_feed"
             app:destination="@id/navFeedFragment"/>
+        <action
+            android:id="@+id/action_profile_to_intro"
+            app:destination="@id/navIntroFragment"/>
     </fragment>
 
     <fragment

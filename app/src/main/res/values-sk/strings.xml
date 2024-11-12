@@ -19,6 +19,11 @@
     <string name="snackbar_text">Toto je snackbar text</string>
     <string name="updateRVButton">Aktualizovať položky</string>
 
+    <string name="profile_text">Môj profil</string>
+    <string name="profile_load_button">Načítať profil</string>
+    <string name="profile_share_location_label">Zdieľať moju polohu</string>
+    <string name="profile_logout_btn">Odhlásiť sa</string>
+
 
     <string name="registerErrorRepeatPassword">Heslá sa nezhodujú</string>
     <string name="registerErrorEmptyUsername">Meno nesmie byť prázne</string>

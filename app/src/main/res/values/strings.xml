@@ -18,6 +18,11 @@
     <string name="snackbar_text">This is a snackbar text</string>
     <string name="updateRVButton">Update Items</string>
 
+    <string name="profile_text">My profile</string>
+    <string name="profile_load_button">Load profile</string>
+    <string name="profile_share_location_label">Share my location</string>
+    <string name="profile_logout_btn">Log out</string>
+
 
     <string name="registerErrorRepeatPassword">Passwords do not match</string>
     <string name="registerErrorEmptyEmail">Email can not be empty</string>
