@@ -18,6 +18,7 @@
     <string name="snackbar_text">This is a snackbar text</string>
     <string name="updateRVButton">Update Items</string>
     <string name="updatedLabelRV">Last update: </string>
+    <string name="headerRV">Other active users</string>
 
     <string name="profile_text">My profile</string>
     <string name="profile_load_button">Load profile</string>

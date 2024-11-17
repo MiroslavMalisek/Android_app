@@ -211,4 +211,6 @@ class DataRepository private constructor(
         return UpdateLocationPair(context.getString(R.string.locationErrorDeleteUnexpected), false)
     }
 
+    suspend fun deleteUsers() = cache.deleteUserItems()
+
 }

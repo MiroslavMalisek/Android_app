@@ -30,6 +30,7 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         viewModelScope.launch {
             _deleteLocationResult.postValue(
                 dataRepository.apiDeleteLocation(context))
+            dataRepository.deleteUsers()
         }
     }
 }

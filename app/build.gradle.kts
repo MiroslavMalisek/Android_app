@@ -75,4 +75,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation(libs.androidx.room.ktx)
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 }
