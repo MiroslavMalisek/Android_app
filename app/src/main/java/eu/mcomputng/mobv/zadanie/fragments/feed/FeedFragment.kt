@@ -63,34 +63,34 @@ class FeedFragment : Fragment() {
         val feedAdapter = FeedAdapter()
         recyclerView.adapter = feedAdapter
         feedAdapter.updateItems(listOf(
-            ItemModel(1, R.drawable.map_foreground,"Mapa"),
-            ItemModel(2, R.drawable.file_foreground,"File"),
-            ItemModel(3, R.drawable.person_foreground,"Person"),
-            ItemModel(4, R.drawable.ic_add_white_foreground,"Launcher"),
-            ItemModel(4, R.drawable.map_foreground,"Launcher"),
-            ItemModel(6, R.drawable.map_foreground,"Launcher"),
-            ItemModel(7, R.drawable.map_foreground,"Launcher"),
-            ItemModel(8, R.drawable.map_foreground,"Launcher"),
-            ItemModel(9, R.drawable.map_foreground,"Launcher"),
-            ItemModel(10, R.drawable.map_foreground,"Launcher"),
-            ItemModel(11, R.drawable.map_foreground,"Launcher"),
+            ItemModel(1, R.drawable.map_foreground,"Mapa", "2023-10-28 16:24:34"),
+            ItemModel(2, R.drawable.file_foreground,"File","2023-10-28 16:24:34"),
+            ItemModel(3, R.drawable.person_foreground,"Person", "2023-10-28 16:24:34"),
+            ItemModel(4, R.drawable.ic_add_white_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(4, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(6, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(7, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(8, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(9, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(10, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+            ItemModel(11, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
         ))
 
         val updateListButton: Button = view.findViewById(R.id.updateRVListButton)
         updateListButton.setOnClickListener{
             feedAdapter.updateItems(listOf(
-                ItemModel(1, R.drawable.map_foreground,"Mapa"),
-                ItemModel(11, R.drawable.map_foreground,"Launcher"),
-                ItemModel(2, R.drawable.file_foreground,"File"),
-                ItemModel(15, R.drawable.person_foreground,"Person"),
+                ItemModel(1, R.drawable.map_foreground,"Mapa", "2023-10-28 16:24:34"),
+                ItemModel(11, R.drawable.map_foreground,"Launcher", "2023-10-28 16:24:34"),
+                ItemModel(2, R.drawable.file_foreground,"File", "2023-10-28 16:24:34"),
+                ItemModel(15, R.drawable.person_foreground,"Person", "2023-10-28 16:24:34"),
             ))
         }
 
-        val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
+        /*val fab = requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener{
             Log.d("fab", "click")
             feedAdapter.addItem(ItemModel(20, R.drawable.map_foreground,"New Item"),)
-        }
+        }*/
         return view
     }
 }

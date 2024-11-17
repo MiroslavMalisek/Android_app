@@ -11,15 +11,15 @@
         <action
             android:id="@+id/action_intro_to_login"
             app:destination="@id/navLoginFragment">
-            <argument
-                android:name="argument"
-                app:argType="string"
-                android:defaultValue="default" />
         </action>
 
         <action
             android:id="@+id/action_intro_to_register"
             app:destination="@id/navRegisterFragment" />
+
+        <action
+            android:id="@+id/action_intro_to_map"
+            app:destination="@id/navMapFragment" />
     </fragment>
 
     <fragment

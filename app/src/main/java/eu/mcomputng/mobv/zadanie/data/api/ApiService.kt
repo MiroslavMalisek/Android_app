@@ -6,6 +6,8 @@ import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangeUserPasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenResponse
+import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserRegistrationRequest
@@ -22,6 +24,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -40,6 +43,12 @@ interface ApiService {
 
     @GET("geofence/list.php")
     suspend fun getGeofenceList(): Response<GeofenceResponse>
+
+    @POST("geofence/update.php")
+    suspend fun updateLocation(@Body location: UpdateLocationRequest): Response<UpdateLocationResponse>
+
+    @DELETE("geofence/update.php")
+    suspend fun deleteLocation(): Response<UpdateLocationResponse>
 
     @POST("user/reset.php")
     suspend fun resetUser(@Body userInfo: UserResetRequest): Response<UserResetResponse>

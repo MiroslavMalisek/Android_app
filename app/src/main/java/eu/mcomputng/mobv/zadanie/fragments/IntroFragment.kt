@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.data.PreferenceData
 
 class IntroFragment : Fragment() {
 
@@ -26,6 +27,11 @@ class IntroFragment : Fragment() {
         val register_button: Button = view.findViewById(R.id.register_button_main)
         register_button.setOnClickListener {
             findNavController().navigate(R.id.action_intro_to_register)
+        }
+
+        val user = PreferenceData.getInstance().getUser(requireContext())
+        if (user != null) {
+            findNavController().navigate(R.id.action_intro_to_map)
         }
 
         return view

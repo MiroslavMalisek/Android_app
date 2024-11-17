@@ -18,6 +18,7 @@
     <string name="description">Descripción</string>
     <string name="snackbar_text">Este es un texto de snackbar</string>
     <string name="updateRVButton">Actualizar Elementos</string>
+    <string name="updatedLabelRV">Última actualización: </string>
 
     <string name="profile_text">Mi pérfil</string>
     <string name="profile_load_button">Cargar pérfil</string>
@@ -47,4 +48,11 @@
     <string name="userErrorGetUserFailed">No se han podido cargar los usuarios</string>
     <string name="userErrorNetwork">No se han podido cargar los usuarios. Pruebe la conexión al internet.</string>
     <string name="userErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
+
+    <string name="locationErrorUpdateFailed">No se ha podido actualizar la posición</string>
+    <string name="locationErrorDeleteFailed">No se ha podido eliminar la posición</string>
+    <string name="locationErrorUpdateNetwork">No se ha podido actualizar la posición. Pruebe la conexión al internet.</string>
+    <string name="locationErrorDeleteNetwork">No se ha podido eliminar la posición. Pruebe la conexión al internet.</string>
+    <string name="locationErrorUpdateUnexpected">Error inesperado actualizando la posición. Inténtelo de nuevo...</string>
+    <string name="locationErrorDeleteUnexpected">Error inesperado eliminando la posición. Inténtelo de nuevo...</string>
 </resources>

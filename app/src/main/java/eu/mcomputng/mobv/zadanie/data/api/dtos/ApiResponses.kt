@@ -6,6 +6,8 @@ data class UserLoginResponse(val uid: String, val access: String, val refresh: S
 
 data class UserResponse(val id: String, val name: String, val photo: String)
 
+data class UpdateLocationResponse(val success: String)
+
 data class UserResetResponse(val status: String, val message: String)
 
 data class ChangeUserPasswordResponse(val status: String)

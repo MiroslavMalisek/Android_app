@@ -4,24 +4,58 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_horizontal_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/recycler_view_item_background"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/item_image"
+        android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         style="@style/RecyclerViewIconColor"
         />
 
-    <TextView
-        android:id="@+id/item_text"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/item_image"
+        app:layout_constraintStart_toEndOf="@id/user_image"
+        android:layout_marginStart="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/user_updated_label"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:id="@+id/user_updated_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/updatedLabelRV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name"
+            app:layout_constraintBottom_toTopOf="@id/user_updated"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:id="@+id/user_updated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_updated_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

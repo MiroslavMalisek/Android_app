@@ -15,7 +15,6 @@ object Utils {
         }
     }
     val fragmentsWithFabVisible: Set<Class<out Fragment>> = setOf(
-        MapFragment::class.java,
         FeedFragment::class.java,
         ProfileFragment::class.java
     )

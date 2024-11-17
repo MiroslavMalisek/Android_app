@@ -17,6 +17,7 @@
     <string name="description">Description</string>
     <string name="snackbar_text">This is a snackbar text</string>
     <string name="updateRVButton">Update Items</string>
+    <string name="updatedLabelRV">Last update: </string>
 
     <string name="profile_text">My profile</string>
     <string name="profile_load_button">Load profile</string>
@@ -46,4 +47,11 @@
     <string name="userErrorGetUserFailed">Failed to load users</string>
     <string name="userErrorNetwork">Failed to load users. Check your internet connection.</string>
     <string name="userErrorUnexpected">An unexpected error occurred. Try again...</string>
+
+    <string name="locationErrorUpdateFailed">Failed to update the location</string>
+    <string name="locationErrorDeleteFailed">Failed to delete the location</string>
+    <string name="locationErrorUpdateNetwork">Failed to update the location. Check your internet connection.</string>
+    <string name="locationErrorDeleteNetwork">Failed to delete the location. Check your internet connection.</string>
+    <string name="locationErrorUpdateUnexpected">An unexpected error occurred when updating the location. Try again...</string>
+    <string name="locationErrorDeleteUnexpected">An unexpected error occurred when deleting the location. Try again...</string>
 </resources>

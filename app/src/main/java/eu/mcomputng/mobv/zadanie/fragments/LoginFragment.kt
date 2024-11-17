@@ -48,7 +48,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     PreferenceData.getInstance().putUser(requireContext(), result.localUser)
                     Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
                     //viewModel.getUser(requireContext(), "20")
-                    viewModel.getGeofence(requireContext())
+                    //viewModel.getGeofence(requireContext())
                     findNavController().navigate(R.id.action_login_to_map)
                 } else {
                     Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()

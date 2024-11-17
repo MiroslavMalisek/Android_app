@@ -18,6 +18,7 @@
     <string name="description">popis</string>
     <string name="snackbar_text">Toto je snackbar text</string>
     <string name="updateRVButton">Aktualizovať položky</string>
+    <string name="updatedLabelRV">Posledná aktualizácia: </string>
 
     <string name="profile_text">Môj profil</string>
     <string name="profile_load_button">Načítať profil</string>
@@ -48,4 +49,11 @@
     <string name="userErrorGetUserFailed">Používateľov sa nepodarilo získať</string>
     <string name="userErrorNetwork">Používateľov sa nepodarilo získať. Skontrolujte pripojenie na internet.</string>
     <string name="userErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
+
+    <string name="locationErrorUpdateFailed">Polohu sa nepodarilo aktualizovať</string>
+    <string name="locationErrorDeleteFailed">Polohu sa nepodarilo odstrániť</string>
+    <string name="locationErrorUpdateNetwork">Polohu sa nepodarilo aktualizovať. Skontrolujte pripojenie na internet.</string>
+    <string name="locationErrorDeleteNetwork">Polohu sa nepodarilo odstrániť. Skontrolujte pripojenie na internet.</string>
+    <string name="locationErrorUpdateUnexpected">Neočakávaná chyba pri aktualizovaní polohy. Skúste to znovu...</string>
+    <string name="locationErrorDeleteUnexpected">Neočakávaná chyba pri odstraňovaní polohy. Skúste to znovu...</string>
 </resources>

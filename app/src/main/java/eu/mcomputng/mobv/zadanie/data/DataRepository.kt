@@ -6,6 +6,8 @@ import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hashPassword
 import eu.mcomputng.mobv.zadanie.data.api.ApiService
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
+import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserRegistrationRequest
@@ -17,6 +19,7 @@ import eu.mcomputng.mobv.zadanie.data.db.entities.UserEntity
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
 import eu.mcomputng.mobv.zadanie.data.models.LocalUser
+import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import eu.mcomputng.mobv.zadanie.data.models.User
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
 import retrofit2.Response
@@ -161,5 +164,51 @@ class DataRepository private constructor(
     }
 
     fun getUsers() = cache.getUsers()
+
+    suspend fun apiUpdateLocation(context: Context, lat: Double, lon: Double, radius: Double): UpdateLocationPair{
+        try {
+            val response: Response<UpdateLocationResponse> = service.updateLocation(
+                UpdateLocationRequest(lat, lon, radius)
+            )
+            if (response.isSuccessful) {
+                response.body()?.let { jsonResponse ->
+                    if (jsonResponse.success == "true"){
+                        return UpdateLocationPair("", true)
+                    }else{
+                        return UpdateLocationPair(context.getString(R.string.locationErrorUpdateFailed), false)
+                    }
+                }
+            }
+            return UpdateLocationPair(context.getString(R.string.locationErrorUpdateFailed), false)
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return UpdateLocationPair(context.getString(R.string.locationErrorUpdateNetwork), false)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return UpdateLocationPair(context.getString(R.string.locationErrorUpdateUnexpected), false)
+    }
+
+    suspend fun apiDeleteLocation(context: Context): UpdateLocationPair{
+        try {
+            val response: Response<UpdateLocationResponse> = service.deleteLocation()
+            if (response.isSuccessful) {
+                response.body()?.let { jsonResponse ->
+                    if (jsonResponse.success == "true"){
+                        return UpdateLocationPair("", true)
+                    }else{
+                        return UpdateLocationPair(context.getString(R.string.locationErrorDeleteFailed), false)
+                    }
+                }
+            }
+            return UpdateLocationPair(context.getString(R.string.locationErrorDeleteFailed), false)
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return UpdateLocationPair(context.getString(R.string.locationErrorDeleteNetwork), false)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return UpdateLocationPair(context.getString(R.string.locationErrorDeleteUnexpected), false)
+    }
 
 }
