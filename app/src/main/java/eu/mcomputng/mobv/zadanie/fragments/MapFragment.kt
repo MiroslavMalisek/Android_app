@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.geojson.Point
@@ -32,6 +33,7 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
 import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.bottomBar.CustomConstraintLayout
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentMapBinding
@@ -42,7 +44,7 @@ class MapFragment : Fragment() {
     private lateinit var binding: FragmentMapBinding
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var mapViewModel: MapViewModel
-    private var locationAcquired: Boolean = false
+    //private var locationAcquired: Boolean = false
     private var sharingLocationAllowed: Boolean = false
     private var selectedPoint: CircleAnnotation? = null
     private var lastLocationMapPoint: Point? = null
@@ -57,7 +59,9 @@ class MapFragment : Fragment() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
-            if (isGranted && locationAcquired) {
+            if (isGranted) {
+                mapViewModel.locationAcquired.postValue(true)
+                PreferenceData.getInstance().putLocationAcquired(requireContext(), true)
                 initLocationComponent()
                 addLocationListeners()
             }
@@ -95,6 +99,8 @@ class MapFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //val bottomBar: CustomConstraintLayout = requireActivity().findViewById(R.id.bottom_bar)
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
         }.also { bnd ->
@@ -102,17 +108,18 @@ class MapFragment : Fragment() {
 
             onMapReady()
 
+
             bnd.myLocation.setOnClickListener {
                 if (!hasPermissions(requireContext())) {
-                    locationAcquired = true
                     requestPermissionLauncher.launch(
                         Manifest.permission.ACCESS_FINE_LOCATION
                     )
                 } else {
-                    if (locationAcquired){
+                    if (mapViewModel.locationAcquired.value == true){
                         lastLocationMapPoint?.let { centerViewOnLocation(it) }
                     }else{
-                        locationAcquired = true
+                        mapViewModel.locationAcquired.postValue(true)
+                        PreferenceData.getInstance().putLocationAcquired(requireContext(), true)
                         initLocationComponent()
                     }
                     addLocationListeners()
@@ -124,6 +131,13 @@ class MapFragment : Fragment() {
         profileViewModel.sharingLocation.postValue(
             PreferenceData.getInstance().getSharing(requireContext())
         )
+
+        //load initial sharing from preference data
+        mapViewModel.locationAcquired.postValue(
+            PreferenceData.getInstance().getLocationAcquired(requireContext())
+        )
+        Log.d("preference acquired", PreferenceData.getInstance().getLocationAcquired(requireContext()).toString())
+
 
         profileViewModel.sharingLocation.observe(viewLifecycleOwner) {
             it?.let {
@@ -158,7 +172,14 @@ class MapFragment : Fragment() {
                 .build()
         )
         binding.mapView.getMapboxMap().loadStyleUri(
-            Style.MAPBOX_STREETS)
+            Style.MAPBOX_STREETS){
+            if (hasPermissions(requireContext()) && mapViewModel.locationAcquired.value == true) {
+                Log.d("start", "true")
+                initLocationComponent()
+                addLocationListeners()
+            }
+            Log.d("start", "false")
+        }
 
         binding.mapView.getMapboxMap().addOnMapClickListener {
             if (hasPermissions(requireContext())) {

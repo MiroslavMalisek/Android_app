@@ -20,6 +20,9 @@
     <string name="updateRVButton">Aktualizovať položky</string>
     <string name="updatedLabelRV">Posledná aktualizácia: </string>
     <string name="headerRV">Ostatní aktívny používatelia</string>
+    <string name="emptyRVNotSharingLocation">Pre zobrazenie ostatných používateľov musíte mať zapnuté zdieľanie polohy</string>
+    <string name="emptyRVLocationNotAcquired">Pre zobrazenie ostatných používateľov musíte najskôr odoslať svoju polohu</string>
+    <string name="emptyRVnoActiveUsers">Žiadny aktívni používatelia</string>
 
     <string name="profile_text">Môj profil</string>
     <string name="profile_load_button">Načítať profil</string>

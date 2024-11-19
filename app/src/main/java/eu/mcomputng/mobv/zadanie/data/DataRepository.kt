@@ -142,7 +142,9 @@ class DataRepository private constructor(
             Log.d("getUser body", response.body().toString())
             if (response.isSuccessful) {
                 response.body()?.let { jsonResponse ->
-                    val users = jsonResponse.list.map {
+                    val users = jsonResponse.list
+                        .filter { it.uid != jsonResponse.me.uid }
+                        .map {
                         UserEntity(
                             it.uid, it.name, it.updated,
                             jsonResponse.me.lat, jsonResponse.me.lon, it.radius,

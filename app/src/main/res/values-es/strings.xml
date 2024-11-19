@@ -20,6 +20,10 @@
     <string name="updateRVButton">Actualizar Elementos</string>
     <string name="updatedLabelRV">Última actualización: </string>
     <string name="headerRV">Otros usuarios activos</string>
+    <string name="emptyRVNotSharingLocation">Tiene que compartir su posición para ver a otros usuarios</string>
+    <string name="emptyRVLocationNotAcquired">Tiene que enviar primero a su posición para ver a otros usuarios</string>
+    <string name="emptyRVnoActiveUsers">Ningún usuario activo</string>
+
 
     <string name="profile_text">Mi pérfil</string>
     <string name="profile_load_button">Cargar pérfil</string>

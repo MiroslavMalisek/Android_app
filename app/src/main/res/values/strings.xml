@@ -19,6 +19,11 @@
     <string name="updateRVButton">Update Items</string>
     <string name="updatedLabelRV">Last update: </string>
     <string name="headerRV">Other active users</string>
+    <string name="emptyRVNotSharingLocation">You have to share your location to see other users</string>
+    <string name="emptyRVLocationNotAcquired">You have to send your location first to see other users</string>
+    <string name="emptyRVnoActiveUsers">No active users</string>
+
+
 
     <string name="profile_text">My profile</string>
     <string name="profile_load_button">Load profile</string>

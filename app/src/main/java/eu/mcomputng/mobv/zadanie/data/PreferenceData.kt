@@ -50,6 +50,20 @@ class PreferenceData private constructor() {
         return sharing
     }
 
+    fun putLocationAcquired(context: Context?, locationAcquired: Boolean) {
+        val sharedPref = getSharedPreferences(context) ?: return
+        val editor = sharedPref.edit()
+        editor.putBoolean(locationAcquiredKey, locationAcquired)
+        editor.apply()
+    }
+
+    fun getLocationAcquired(context: Context?): Boolean {
+        val sharedPref = getSharedPreferences(context) ?: return false
+        val locationAcquired = sharedPref.getBoolean(locationAcquiredKey, false)
+
+        return locationAcquired
+    }
+
 
     companion object {
         @Volatile
@@ -66,6 +80,7 @@ class PreferenceData private constructor() {
         private const val shpKey = "eu.mcomputing.mobv.zadanie"
         private const val userKey = "userKey"
         private const val sharingKey = "sharingKey"
+        private const val locationAcquiredKey = "locationAcquiredKey"
 
     }
 

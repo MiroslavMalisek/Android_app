@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
+import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.viewModels.AuthViewModel
 import eu.mcomputng.mobv.zadanie.viewModels.FeedViewModel
 import eu.mcomputng.mobv.zadanie.viewModels.ProfileViewModel
@@ -87,16 +88,26 @@ class FeedFragment : Fragment() {
 
         val emptyMessage = view.findViewById<TextView>(R.id.empty_message)
 
+        viewModel.updateItems()
+
         viewModel.feed_items.observe(viewLifecycleOwner) { users ->
             users?.let {
                 if (users.isEmpty()) {
+                    val feedEmptyMessageReason: String
+                    if (!PreferenceData.getInstance().getSharing(requireContext())){
+                        feedEmptyMessageReason = getString(R.string.emptyRVNotSharingLocation)
+                    }else if (!PreferenceData.getInstance().getLocationAcquired(requireContext())){
+                        feedEmptyMessageReason = getString(R.string.emptyRVLocationNotAcquired)
+                    }else{
+                        feedEmptyMessageReason = getString(R.string.emptyRVnoActiveUsers)
+                    }
+                    emptyMessage.text = feedEmptyMessageReason
                     recyclerView.visibility = View.GONE
                     emptyMessage.visibility = View.VISIBLE
                 }else{
                     recyclerView.visibility = View.VISIBLE
                     emptyMessage.visibility = View.GONE
                     feedAdapter.updateItems(it.map { user ->
-                        // Transform UserEntity into ItemModel if necessary
                         ItemModel(
                             id = user.id.toInt(),
                             imageResId = R.drawable.map_foreground, // Replace with appropriate logic

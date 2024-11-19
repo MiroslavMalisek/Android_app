@@ -13,6 +13,8 @@ class MapViewModel(private val dataRepository: DataRepository) : ViewModel() {
     private val _updateLocationResult = MutableLiveData<UpdateLocationPair>()
     val updateLocationResult: LiveData<UpdateLocationPair> get() = _updateLocationResult
 
+    val locationAcquired = MutableLiveData<Boolean?>(null)
+
     fun updateLocation(context: Context, lat: Double, lon: Double, radius: Double) {
         viewModelScope.launch {
             _updateLocationResult.postValue(

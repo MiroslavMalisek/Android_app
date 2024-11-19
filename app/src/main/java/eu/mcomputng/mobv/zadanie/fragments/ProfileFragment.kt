@@ -14,9 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils
+import eu.mcomputng.mobv.zadanie.bottomBar.CustomConstraintLayout
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentProfileBinding
@@ -72,6 +74,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val fab: FloatingActionButton = requireActivity().findViewById(R.id.fab)
+
         binding = FragmentProfileBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
@@ -85,13 +89,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             bnd.logoutBtn.setOnClickListener {
                 PreferenceData.getInstance().clearData(requireContext())
+                viewModel.deleteLocation(requireContext())
                 Log.d("login result when logout", viewModelAuth.loginResult.value.toString())
+
                 it.findNavController().navigate(R.id.action_profile_to_intro, null, Utils.options)
             }
 
             viewModel.userResult.observe(viewLifecycleOwner) {
                 if (it.message.isNotEmpty()) {
-                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).setAnchorView(fab).show()
                 }
             }
 
@@ -115,6 +121,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     } else {
                         //switch is off
                         PreferenceData.getInstance().putSharing(requireContext(), false)
+                        PreferenceData.getInstance().putLocationAcquired(requireContext(), false)
                         viewModel.deleteLocation(requireContext())
                     }
                 }
@@ -123,7 +130,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewModel.deleteLocationResult.observe(viewLifecycleOwner){result ->
                 //delete of location failed
                 if (!result.success){
-                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).setAnchorView(fab).show()
                 }else{
                     Log.d("location deleted: ", result.success.toString())
                 }
