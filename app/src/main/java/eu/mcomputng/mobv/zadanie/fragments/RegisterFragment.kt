@@ -16,7 +16,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
 import eu.mcomputng.mobv.zadanie.data.DataRepository
+import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.viewModels.AuthViewModel
 
 class RegisterFragment : Fragment() {
@@ -42,6 +44,7 @@ class RegisterFragment : Fragment() {
             //Log.d("user", (result.user).toString())
             //registration successful
             if (result.localUser != null) {
+                PreferenceData.getInstance().putUser(requireContext(), result.localUser)
                 Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_register_to_map)
             } else {
@@ -55,6 +58,13 @@ class RegisterFragment : Fragment() {
 
         val registerButton: Button = view.findViewById(R.id.registerButton)
         registerButton.setOnClickListener{
+            hideKeyboard(requireActivity())
+            //clear focus from text inputs after login click
+            view.findViewById<EditText>(R.id.username_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.email_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.password_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.password_repeat_edittext).clearFocus()
+
             val password =  view.findViewById<EditText>(R.id.password_edittext).text.toString()
             val repeatPassword = view.findViewById<EditText>(R.id.password_repeat_edittext).text.toString()
             if (password != repeatPassword){
@@ -68,6 +78,17 @@ class RegisterFragment : Fragment() {
                 )
             }
         }
+
+        //hide keyboard and remove focus from inputs when user click on screen
+        view.setOnTouchListener { _, _ ->
+            hideKeyboard(requireActivity()) // Hide keyboard
+            view.findViewById<EditText>(R.id.username_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.email_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.password_edittext).clearFocus()
+            view.findViewById<EditText>(R.id.password_repeat_edittext).clearFocus()
+            false // Return false to allow other touch events to be processed
+        }
+
         return view
     }
 }

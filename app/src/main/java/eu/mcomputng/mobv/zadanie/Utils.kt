@@ -1,6 +1,9 @@
 package eu.mcomputng.mobv.zadanie
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.navOptions
 import eu.mcomputng.mobv.zadanie.fragments.feed.FeedFragment
 import eu.mcomputng.mobv.zadanie.fragments.MapFragment
@@ -22,5 +25,13 @@ object Utils {
         val digest = MessageDigest.getInstance("SHA-256")
         val hashBytes = digest.digest(password.toByteArray())
         return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
+    fun hideKeyboard(activity: FragmentActivity) {
+        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = activity.currentFocus
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

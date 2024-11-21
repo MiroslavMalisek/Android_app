@@ -1,19 +1,24 @@
 package eu.mcomputng.mobv.zadanie.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentLoginBinding
@@ -42,9 +47,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             model = viewModel
         }.also { bnd ->
             viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-                Log.d("user", (result.localUser).toString())
-                Log.d("message", result.message)
-                Log.d("is not empty", result.message.isNotEmpty().toString())
                 //login successful
                 if (result.localUser != null) {
                     PreferenceData.getInstance().putUser(requireContext(), result.localUser)
@@ -54,11 +56,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     findNavController().navigate(R.id.action_login_to_map)
                 } else {
                     if (result.message.isNotEmpty()){
+                        hideKeyboard(requireActivity())
+                        //clear focus from text inputs after login click
+                        bnd.usernameEdittext.clearFocus()
+                        bnd.passwordTextview.clearFocus()
                         Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
                     }else{
                         //when there was logout, there is no message and new login has to be done
                     }
                 }
+            }
+            //hide keyboard and remove focus from inputs when user click on screen
+            view.setOnTouchListener { _, _ ->
+                hideKeyboard(requireActivity()) // Hide keyboard
+                bnd.usernameEdittext.clearFocus()
+                bnd.passwordTextview.clearFocus()
+                false // Return false to allow other touch events to be processed
             }
         }
     }
