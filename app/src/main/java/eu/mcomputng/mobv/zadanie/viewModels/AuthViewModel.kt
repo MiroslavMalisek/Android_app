@@ -9,9 +9,10 @@ import androidx.lifecycle.viewModelScope
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
+import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import kotlinx.coroutines.launch
 
-class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), ViewModelInterface {
     private val _registrationResult = MutableLiveData<RegistrationResultPair>()
     val registrationResult: LiveData<RegistrationResultPair> get() = _registrationResult
 
@@ -46,5 +47,12 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel() {
         viewModelScope.launch {
             dataRepository.apiGetGeofenceUsers(context)
         }
+    }
+
+    override fun clear() {
+        _registrationResult.postValue(RegistrationResultPair(""))
+        _loginResult.postValue(LoginResultPair(""))
+        loginUsername.postValue("")
+        loginPassword.postValue("")
     }
 }

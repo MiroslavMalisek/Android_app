@@ -22,6 +22,7 @@ import eu.mcomputng.mobv.zadanie.data.models.LocalUser
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import eu.mcomputng.mobv.zadanie.data.models.User
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
+import okhttp3.Call
 import retrofit2.Response
 import java.io.IOException
 
@@ -138,12 +139,12 @@ class DataRepository private constructor(
     suspend fun apiGetGeofenceUsers(context: Context): String{
         try {
             val response: Response<GeofenceResponse> = service.getGeofenceList()
-            Log.d("getUser code", response.code().toString())
-            Log.d("getUser body", response.body().toString())
+            Log.d("getGeofence code", response.code().toString())
+            Log.d("getGeofence body", response.body().toString())
             if (response.isSuccessful) {
                 response.body()?.let { jsonResponse ->
                     val users = jsonResponse.list
-                        .filter { it.uid != jsonResponse.me.uid }
+                        //.filter { it.uid != jsonResponse.me.uid }
                         .map {
                         UserEntity(
                             it.uid, it.name, it.updated,

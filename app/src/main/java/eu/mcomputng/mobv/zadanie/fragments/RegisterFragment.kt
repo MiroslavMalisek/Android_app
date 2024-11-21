@@ -43,9 +43,13 @@ class RegisterFragment : Fragment() {
             //registration successful
             if (result.localUser != null) {
                 Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_register_to_feed)
+                findNavController().navigate(R.id.action_register_to_map)
             } else {
-                Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                if (result.message.isNotEmpty()){
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                }else{
+                    //when there was logout, there is no message and new login has to be done
+                }
             }
         }
 

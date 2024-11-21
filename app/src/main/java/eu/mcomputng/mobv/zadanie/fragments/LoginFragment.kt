@@ -43,7 +43,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }.also { bnd ->
             viewModel.loginResult.observe(viewLifecycleOwner) { result ->
                 Log.d("user", (result.localUser).toString())
-                //registration successful
+                Log.d("message", result.message)
+                Log.d("is not empty", result.message.isNotEmpty().toString())
+                //login successful
                 if (result.localUser != null) {
                     PreferenceData.getInstance().putUser(requireContext(), result.localUser)
                     Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
@@ -51,7 +53,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     //viewModel.getGeofence(requireContext())
                     findNavController().navigate(R.id.action_login_to_map)
                 } else {
-                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                    if (result.message.isNotEmpty()){
+                        Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                    }else{
+                        //when there was logout, there is no message and new login has to be done
+                    }
                 }
             }
         }

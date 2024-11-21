@@ -8,10 +8,11 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.db.entities.UserEntity
+import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import eu.mcomputng.mobv.zadanie.utils.Evento
 import kotlinx.coroutines.launch
 
-class FeedViewModel(private val repository: DataRepository, private val context: Context) : ViewModel() {
+class FeedViewModel(private val repository: DataRepository, private val context: Context) : ViewModel(), ViewModelInterface {
 
     val feed_items: LiveData<List<UserEntity>?> =
         liveData {
@@ -33,6 +34,13 @@ class FeedViewModel(private val repository: DataRepository, private val context:
             _message.postValue(Evento(repository.apiGetGeofenceUsers(context)))
             loading.postValue(false)
         }
+    }
+
+    override fun clear() {
+        feed_items as MutableLiveData // Force casting to MutableLiveData
+        feed_items.postValue(null)
+        loading.postValue(false)
+        _message.postValue(Evento("")) // Optionally reset the message to an empty Evento
     }
 
 

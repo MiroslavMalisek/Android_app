@@ -10,9 +10,11 @@ import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
 import eu.mcomputng.mobv.zadanie.utils.Evento
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel(), ViewModelInterface {
 
     private val _userResult = MutableLiveData<UserGetPair>()
     val userResult: LiveData<UserGetPair> get() = _userResult
@@ -36,10 +38,27 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         }
     }
 
+    suspend fun deleteLocationBlocking(context: Context) {
+        val locationDeleteResult = withContext(Dispatchers.IO) {
+            dataRepository.apiDeleteLocation(context)
+        }
+        //this waits until apiDeleteLocation is done
+        if (locationDeleteResult.success){
+            this.deleteUsers()
+        }
+        _deleteLocationResult.postValue(locationDeleteResult)
+        Log.d("delete location when logout", locationDeleteResult.success.toString())
+    }
+
     fun deleteUsers() {
         viewModelScope.launch {
             dataRepository.deleteUsers()
-            Log.d("users after logout", dataRepository.getUsers().value.toString())
         }
+    }
+
+    override fun clear() {
+        _userResult.postValue(UserGetPair(""))
+        _deleteLocationResult.postValue(UpdateLocationPair(""))
+        sharingLocation.postValue(null)
     }
 }

@@ -39,8 +39,8 @@
             android:id="@+id/action_register_to_intro"
             app:destination="@id/navIntroFragment"/>
         <action
-            android:id="@+id/action_register_to_feed"
-            app:destination="@id/navFeedFragment"/>
+            android:id="@+id/action_register_to_map"
+            app:destination="@id/navMapFragment"/>
     </fragment>
 
     <fragment

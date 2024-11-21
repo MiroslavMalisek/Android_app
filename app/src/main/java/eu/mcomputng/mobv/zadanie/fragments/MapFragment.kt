@@ -232,7 +232,6 @@ class MapFragment : Fragment() {
         if (sharingLocationAllowed){
             Log.d("should update:", "yes")
             mapViewModel.updateLocation(requireContext(), point.latitude(), point.longitude(), radius)
-            mapViewModel.getGeofence(requireContext())
         }else{
             Log.d("should update:", "no")
         }

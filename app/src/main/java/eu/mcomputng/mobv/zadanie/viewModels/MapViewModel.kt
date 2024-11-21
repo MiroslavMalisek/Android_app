@@ -9,7 +9,7 @@ import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import kotlinx.coroutines.launch
 
-class MapViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class MapViewModel(private val dataRepository: DataRepository) : ViewModel(), ViewModelInterface {
     private val _updateLocationResult = MutableLiveData<UpdateLocationPair>()
     val updateLocationResult: LiveData<UpdateLocationPair> get() = _updateLocationResult
 
@@ -23,9 +23,10 @@ class MapViewModel(private val dataRepository: DataRepository) : ViewModel() {
         }
     }
 
-    fun getGeofence(context: Context){
-        viewModelScope.launch {
-            dataRepository.apiGetGeofenceUsers(context)
-        }
+    // Function to clear/reset the ViewModel
+    override fun clear() {
+        _updateLocationResult.postValue(UpdateLocationPair(""))
+        locationAcquired.postValue(null)
     }
+
 }
