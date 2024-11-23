@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
@@ -78,6 +79,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             lifecycleOwner = viewLifecycleOwner
             model = viewModelProfile
         }.also { bnd ->
+
+            bnd.customFab.setNavController(findNavController())
+
             bnd.loadProfileBtn.setOnClickListener {
                 val user = PreferenceData.getInstance().getUser(requireContext())
                 user?.let { storedUser ->

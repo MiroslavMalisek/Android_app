@@ -5,6 +5,8 @@ import android.util.Log
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hashPassword
 import eu.mcomputng.mobv.zadanie.data.api.ApiService
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordResponse
@@ -18,6 +20,7 @@ import eu.mcomputng.mobv.zadanie.data.api.dtos.UserResponse
 import eu.mcomputng.mobv.zadanie.data.db.AppRoomDatabase
 import eu.mcomputng.mobv.zadanie.data.db.LocalCache
 import eu.mcomputng.mobv.zadanie.data.db.entities.UserEntity
+import eu.mcomputng.mobv.zadanie.data.models.ChangePasswordResultPair
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
 import eu.mcomputng.mobv.zadanie.data.models.LocalUser
@@ -149,6 +152,39 @@ class DataRepository private constructor(
             ex.printStackTrace()
         }
         return ResetPasswordResultPair(context.getString(R.string.resetPasswordErrorUnexpected), false)
+    }
+
+    suspend fun apiChangePassword(doHashPassword: Boolean = true, context: Context, actualPassword: String, newPassword: String): ChangePasswordResultPair{
+        if (actualPassword.isEmpty()){
+            return ChangePasswordResultPair(context.getString(R.string.changePasswordActualPasswordEmpty), false)
+        }
+        if (newPassword.isEmpty()){
+            return ChangePasswordResultPair(context.getString(R.string.changePasswordNewPasswordEmpty), false)
+        }
+
+        val processedActualPassword: String = if (doHashPassword){
+            hashPassword(actualPassword)
+        }else{
+            actualPassword
+        }
+
+        try {
+            val response: Response<ChangePasswordResponse> = service.changePassword(
+                ChangePasswordRequest(old_password = processedActualPassword, new_password = hashPassword(newPassword))
+            )
+            Log.d("response code", response.code().toString())
+            Log.d("response body", response.body().toString())
+            if (response.isSuccessful) {
+                return ChangePasswordResultPair(context.getString(R.string.changePasswordSuccess), true)
+            }
+            return ChangePasswordResultPair(context.getString(R.string.changePasswordFailed), false)
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return ChangePasswordResultPair(context.getString(R.string.changePasswordErrorNetwork), false)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ChangePasswordResultPair(context.getString(R.string.changePasswordErrorUnexpected), false)
     }
 
     suspend fun apiGetUser(context: Context, id: String): UserGetPair{

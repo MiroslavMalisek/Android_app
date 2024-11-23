@@ -10,7 +10,7 @@ data class UpdateLocationResponse(val success: String)
 
 data class ResetPasswordResponse(val status: String, val message: String = "")
 
-data class ChangeUserPasswordResponse(val status: String)
+data class ChangePasswordResponse(val status: String)
 
 data class RefreshTokenResponse(val uid: String, val access: String, val refresh: String)
 

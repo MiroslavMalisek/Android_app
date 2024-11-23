@@ -40,6 +40,11 @@
     <string name="fab_edit_image">Editar foto</string>
     <string name="fab_change_password">Cambiar la contraseňa</string>
 
+    <string name="change_password_text">Cambio de la contraseňa</string>
+    <string name="change_password_actual_text">Contraseňa actual</string>
+    <string name="change_password_new_text">Contraseňa nueva</string>
+    <string name="change_password_repeat_text">Repita contraseňa nueva</string>
+    <string name="change_password_btn_text">Cambiar</string>
 
     <string name="registerErrorRepeatPassword">Contraseňas no son iguales</string>
     <string name="registerErrorEmptyEmail">El correo no puede estar vacío</string>
@@ -65,6 +70,14 @@
     <string name="resetPasswordFailed">La solicitud para el reset de la contraseňa ha fallado.</string>
     <string name="resetPasswordErrorNetwork">La solicitud ha fallado. Pruebe la conexión al internet.</string>
     <string name="resetPasswordErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
+
+    <string name="changePasswordActualPasswordEmpty">Contraseňa actual no puede estar vacía</string>
+    <string name="changePasswordNewPasswordEmpty">Contraseňa nueva no puede estar vacía</string>
+    <string name="changePasswordRepeatPasswordMatch">Contraseňas no son iguales</string>
+    <string name="changePasswordSuccess">El cambio de la contraseňa ha sido exitoso</string>
+    <string name="changePasswordFailed">La solicitud para el cambio de la contraseňa ha fallado.</string>
+    <string name="changePasswordErrorNetwork">La solicitud ha fallado. Pruebe la conexión al internet.</string>
+    <string name="changePasswordErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
 
     <string name="userErrorGetUserFailed">No se han podido cargar los usuarios</string>
     <string name="userErrorNetwork">No se han podido cargar los usuarios. Pruebe la conexión al internet.</string>

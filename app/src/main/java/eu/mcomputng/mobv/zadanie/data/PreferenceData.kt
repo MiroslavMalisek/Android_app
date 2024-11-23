@@ -64,7 +64,7 @@ class PreferenceData private constructor() {
         return locationAcquired
     }
 
-    fun putResetPasswordUserEmail(context: Context?, email: String) {
+    fun putResetPasswordUserEmail(context: Context?, email: String?) {
         val sharedPref = getSharedPreferences(context) ?: return
         val editor = sharedPref.edit()
         editor.putString(resetPasswordUserEmail, email)

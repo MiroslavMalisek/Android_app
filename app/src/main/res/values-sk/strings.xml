@@ -39,6 +39,12 @@
     <string name="fab_edit_image">Upraviť fotku</string>
     <string name="fab_change_password">Zmeniť heslo</string>
 
+    <string name="change_password_text">Zmena hesla</string>
+    <string name="change_password_actual_text">Aktuálne heslo</string>
+    <string name="change_password_new_text">Nové heslo</string>
+    <string name="change_password_repeat_text">Zopakujte nové heslo</string>
+    <string name="change_password_btn_text">Zmeniť</string>
+
 
     <string name="registerErrorRepeatPassword">Heslá sa nezhodujú</string>
     <string name="registerErrorEmptyUsername">Meno nesmie byť prázne</string>
@@ -65,6 +71,14 @@
     <string name="resetPasswordFailed">Požiadavka na reset hesla sa nepodarila.</string>
     <string name="resetPasswordErrorNetwork">Požiadavka sa nepodarila. Skontrolujte pripojenie na internet.</string>
     <string name="resetPasswordErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
+
+    <string name="changePasswordActualPasswordEmpty">Aktuálne heslo nemôže byť prázdne</string>
+    <string name="changePasswordNewPasswordEmpty">Nové heslo nemôže byť prázdne</string>
+    <string name="changePasswordRepeatPasswordMatch">Heslá sa nezhodujú</string>
+    <string name="changePasswordSuccess">Heslo bolo úspešne zmenené</string>
+    <string name="changePasswordFailed">Požiadavka na zmenu hesla sa nepodarila.</string>
+    <string name="changePasswordErrorNetwork">Požiadavka sa nepodarila. Skontrolujte pripojenie na internet.</string>
+    <string name="changePasswordErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
 
     <string name="userErrorGetUserFailed">Používateľov sa nepodarilo získať</string>
     <string name="userErrorNetwork">Používateľov sa nepodarilo získať. Skontrolujte pripojenie na internet.</string>

@@ -1,8 +1,8 @@
 package eu.mcomputng.mobv.zadanie.data.api
 
 import android.content.Context
-import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangeUserPasswordRequest
-import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangeUserPasswordResponse
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenResponse
@@ -54,7 +54,7 @@ interface ApiService {
     suspend fun resetPassword(@Body userInfo: ResetPasswordRequest): Response<ResetPasswordResponse>
 
     @POST("user/password.php")
-    suspend fun changeUserPassword(@Body userInfo: ChangeUserPasswordRequest): Response<ChangeUserPasswordResponse>
+    suspend fun changePassword(@Body userInfo: ChangePasswordRequest): Response<ChangePasswordResponse>
 
     @POST("user/refresh.php")
     suspend fun refreshToken(

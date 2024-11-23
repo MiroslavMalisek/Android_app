@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_login_to_map"
             app:destination="@id/navMapFragment" />
+        <action
+            android:id="@+id/action_login_to_change_password"
+            app:destination="@id/navChangePasswordFragment" />
 
     </fragment>
 
@@ -87,6 +90,18 @@
         <action
             android:id="@+id/action_profile_to_intro"
             app:destination="@id/navIntroFragment"/>
+        <action
+            android:id="@+id/action_profile_to_change_password"
+            app:destination="@id/navChangePasswordFragment"/>
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_change_password"
+        android:id="@+id/navChangePasswordFragment"
+        android:name="eu.mcomputng.mobv.zadanie.fragments.profile.ChangePasswordFragment">
+        <action
+            android:id="@+id/action_change_password_to_map"
+            app:destination="@id/navMapFragment"/>
     </fragment>
 
     <fragment

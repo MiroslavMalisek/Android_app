@@ -8,6 +8,6 @@ data class UpdateLocationRequest(val lat: Double, val lon: Double, val radius: D
 
 data class ResetPasswordRequest(val email: String)
 
-data class ChangeUserPasswordRequest(val old_password: String, val new_password: String)
+data class ChangePasswordRequest(val old_password: String, val new_password: String)
 
 data class RefreshTokenRequest(val refresh: String)

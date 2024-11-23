@@ -53,9 +53,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 if (result.localUser != null) {
                     PreferenceData.getInstance().putUser(requireContext(), result.localUser)
                     Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
-                    //viewModel.getUser(requireContext(), "20")
-                    //viewModel.getGeofence(requireContext())
-                    findNavController().navigate(R.id.action_login_to_map)
+                    val emailResetPassword: String? = PreferenceData.getInstance().getResetPasswordUserEmail(requireContext())
+                    if ((emailResetPassword != null) && (emailResetPassword == result.localUser.username)){
+                        //navigate to change password when there was a password reset
+                        Snackbar.make(view, "Pred pokračovaním si musíte zmeniť heslo", Snackbar.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_login_to_change_password)
+                    }else{
+                        findNavController().navigate(R.id.action_login_to_map)
+                    }
                 } else {
                     if (result.message.isNotEmpty()){
                         hideKeyboard(requireActivity())

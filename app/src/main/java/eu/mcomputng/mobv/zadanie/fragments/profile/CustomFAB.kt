@@ -52,11 +52,17 @@ class CustomFAB(context: Context, attrs: AttributeSet? = null) : ConstraintLayou
         }
         fabChangePassword.setOnClickListener{
             Log.d("password", "clicked")
+            this.navController.navigate(R.id.action_profile_to_change_password)
         }
         fabChangePasswordTextview.setOnClickListener{
             Log.d("passwordView", "clicked")
+            this.navController.navigate(R.id.action_profile_to_change_password)
         }
 
+    }
+
+    fun setNavController(navController: NavController) {
+        this.navController = navController
     }
 
     private fun makeFabsVisible(){

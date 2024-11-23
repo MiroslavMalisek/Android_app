@@ -11,6 +11,16 @@ class Logger() : Interceptor {
         Log.d("url", request.url.toUrl().toString())
         Log.d("headers", request.headers.toString())
         Log.d("api", BuildConfig.MOBV_API_KEY)
+        val requestBody = request.body
+        if (requestBody != null) {
+            val buffer = okio.Buffer()
+            requestBody.writeTo(buffer)
+            val bodyString = buffer.readUtf8() // This contains the JSON content
+            Log.d("body", bodyString)
+        } else {
+            Log.d("body", "No body")
+        }
+        //Log.d("body", request.body.toString())
         val response = chain.proceed(request)
         return response
     }
