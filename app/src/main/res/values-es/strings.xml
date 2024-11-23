@@ -12,6 +12,8 @@
     <string name="login">Inicio de sesión</string>
     <string name="registration">Registración</string>
     <string name="log_in">Iniciar sesión</string>
+    <string name="have_account">Ya tiene la cuenta? Iniciar sesión aqui</string>
+    <string name="dont_have_account">No tiene la cuenta? Registrar aquí</string>
 
     <string name="forgotten_password">Contraseňa olvidada?</string>
     <string name="reset_password_header">Recuperación de la contraseňa</string>

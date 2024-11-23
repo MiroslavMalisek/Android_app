@@ -27,11 +27,14 @@
         android:id="@+id/navLoginFragment"
         android:name="eu.mcomputng.mobv.zadanie.fragments.LoginFragment">
         <action
-            android:id="@+id/action_login_to_map"
-            app:destination="@id/navMapFragment" />
-        <action
             android:id="@+id/action_login_to_reset"
             app:destination="@id/navResetPasswordFragment" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/navRegisterFragment" />
+        <action
+            android:id="@+id/action_login_to_map"
+            app:destination="@id/navMapFragment" />
 
     </fragment>
 
@@ -45,6 +48,9 @@
         <action
             android:id="@+id/action_register_to_map"
             app:destination="@id/navMapFragment"/>
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/navLoginFragment"/>
     </fragment>
 
     <fragment

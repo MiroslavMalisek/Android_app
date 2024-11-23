@@ -11,6 +11,8 @@
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="log_in">Log in</string>
+    <string name="have_account">Already have an account? Login here</string>
+    <string name="dont_have_account">Dont have an account? Register here</string>
 
     <string name="forgotten_password">Forgotten password?</string>
     <string name="reset_password_header">Reset of forgotten password</string>

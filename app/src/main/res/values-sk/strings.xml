@@ -12,6 +12,8 @@
     <string name="login">Prihlásenie</string>
     <string name="registration">Registrácia</string>
     <string name="log_in">Prihlásiť</string>
+    <string name="have_account">Máte už účet? Prihláste sa tu</string>
+    <string name="dont_have_account">Nemáte ešte účet? Zaregistrujte sa tu</string>
 
     <string name="forgotten_password">Zabudnuté heslo?</string>
     <string name="reset_password_header">Obnovenie zabudnutého hesla</string>

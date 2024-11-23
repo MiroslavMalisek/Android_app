@@ -74,6 +74,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 findNavController().navigate(R.id.action_login_to_reset)
             }
 
+            bnd.dontHaveAccountTextview.setOnClickListener{
+                findNavController().navigate(R.id.action_login_to_register)
+            }
+
             //hide keyboard and remove focus from inputs when user click on screen
             view.setOnTouchListener { _, _ ->
                 hideKeyboard(requireActivity()) // Hide keyboard

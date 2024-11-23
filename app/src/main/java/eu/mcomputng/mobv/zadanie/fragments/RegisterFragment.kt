@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -78,6 +79,11 @@ class RegisterFragment : Fragment() {
                     password
                 )
             }
+        }
+
+        val haveAccount: TextView = view.findViewById(R.id.have_account_textview)
+        haveAccount.setOnClickListener{
+            findNavController().navigate(R.id.action_register_to_login)
         }
 
         //hide keyboard and remove focus from inputs when user click on screen
