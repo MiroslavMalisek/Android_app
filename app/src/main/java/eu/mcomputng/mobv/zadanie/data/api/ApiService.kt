@@ -6,14 +6,14 @@ import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangeUserPasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.RefreshTokenResponse
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserRegistrationRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserRegistrationResponse
-import eu.mcomputng.mobv.zadanie.data.api.dtos.UserResetRequest
-import eu.mcomputng.mobv.zadanie.data.api.dtos.UserResetResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserResponse
 import eu.mcomputng.mobv.zadanie.data.api.helpers.AuthInterceptor
 import eu.mcomputng.mobv.zadanie.data.api.helpers.Logger
@@ -51,7 +51,7 @@ interface ApiService {
     suspend fun deleteLocation(): Response<UpdateLocationResponse>
 
     @POST("user/reset.php")
-    suspend fun resetUser(@Body userInfo: UserResetRequest): Response<UserResetResponse>
+    suspend fun resetPassword(@Body userInfo: ResetPasswordRequest): Response<ResetPasswordResponse>
 
     @POST("user/password.php")
     suspend fun changeUserPassword(@Body userInfo: ChangeUserPasswordRequest): Response<ChangeUserPasswordResponse>

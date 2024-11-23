@@ -64,6 +64,20 @@ class PreferenceData private constructor() {
         return locationAcquired
     }
 
+    fun putResetPasswordUserEmail(context: Context?, email: String) {
+        val sharedPref = getSharedPreferences(context) ?: return
+        val editor = sharedPref.edit()
+        editor.putString(resetPasswordUserEmail, email)
+        editor.apply()
+    }
+
+    fun getResetPasswordUserEmail(context: Context?): String? {
+        val sharedPref = getSharedPreferences(context) ?: return null
+        val email = sharedPref.getString(resetPasswordUserEmail, null) ?: return null
+
+        return email
+    }
+
 
     companion object {
         @Volatile
@@ -81,6 +95,7 @@ class PreferenceData private constructor() {
         private const val userKey = "userKey"
         private const val sharingKey = "sharingKey"
         private const val locationAcquiredKey = "locationAcquiredKey"
+        private const val resetPasswordUserEmail = "resetUserEmail"
 
     }
 

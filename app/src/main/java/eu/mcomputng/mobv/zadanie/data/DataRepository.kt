@@ -6,6 +6,8 @@ import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hashPassword
 import eu.mcomputng.mobv.zadanie.data.api.ApiService
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordRequest
+import eu.mcomputng.mobv.zadanie.data.api.dtos.ResetPasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UpdateLocationResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.UserLoginRequest
@@ -19,6 +21,7 @@ import eu.mcomputng.mobv.zadanie.data.db.entities.UserEntity
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
 import eu.mcomputng.mobv.zadanie.data.models.LocalUser
+import eu.mcomputng.mobv.zadanie.data.models.ResetPasswordResultPair
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import eu.mcomputng.mobv.zadanie.data.models.User
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
@@ -113,6 +116,31 @@ class DataRepository private constructor(
             ex.printStackTrace()
         }
         return LoginResultPair(context.getString(R.string.loginErrorUnexpected), null)
+    }
+
+    suspend fun apiResetPassword(context: Context, email: String): ResetPasswordResultPair{
+        try {
+            val response: Response<ResetPasswordResponse> = service.resetPassword(
+                ResetPasswordRequest(email)
+            )
+            if (response.isSuccessful) {
+                return ResetPasswordResultPair(context.getString(R.string.resetPasswordSuccess), true)
+            }else{
+                response.body()?.let { jsonResponse ->
+                    if (jsonResponse.message.isNotEmpty()){
+                        return ResetPasswordResultPair(jsonResponse.message, false)
+                    }else{
+                        return ResetPasswordResultPair(context.getString(R.string.resetPasswordFailed), false)
+                    }
+                }
+            }
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return ResetPasswordResultPair(context.getString(R.string.resetPasswordErrorNetwork), false)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ResetPasswordResultPair(context.getString(R.string.resetPasswordErrorUnexpected), false)
     }
 
     suspend fun apiGetUser(context: Context, id: String): UserGetPair{

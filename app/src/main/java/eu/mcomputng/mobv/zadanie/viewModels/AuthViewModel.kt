@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
+import eu.mcomputng.mobv.zadanie.data.models.ResetPasswordResultPair
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
 import kotlinx.coroutines.launch
 
@@ -19,8 +20,13 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), V
     private val _loginResult = MutableLiveData<LoginResultPair>()
     val loginResult: LiveData<LoginResultPair> get() = _loginResult
 
+    private val _resetPasswordResult = MutableLiveData<ResetPasswordResultPair>()
+    val resetPasswordResult: LiveData<ResetPasswordResultPair> get() = _resetPasswordResult
+
     val loginUsername = MutableLiveData<String>()
     val loginPassword = MutableLiveData<String>()
+
+    val resetPasswordEmail = MutableLiveData<String>()
 
     fun registerUser(context: Context, username: String, email: String, password: String) {
         viewModelScope.launch {
@@ -34,6 +40,14 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), V
                 view.context,
                 loginUsername.value ?: "",
                 loginPassword.value ?: ""))
+        }
+    }
+
+    fun resetPassword(view: View){
+        viewModelScope.launch {
+            _resetPasswordResult.postValue(dataRepository.apiResetPassword(
+                view.context,
+                resetPasswordEmail.value ?: ""))
         }
     }
 
@@ -54,5 +68,10 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), V
         _loginResult.postValue(LoginResultPair(""))
         loginUsername.postValue("")
         loginPassword.postValue("")
+    }
+
+    fun clearResetPassword(){
+        resetPasswordEmail.postValue("")
+        _resetPasswordResult.postValue(ResetPasswordResultPair())
     }
 }

@@ -18,7 +18,6 @@ import eu.mcomputng.mobv.zadanie.Utils
 class MainActivity : AppCompatActivity() {
     private var bottomBarVisible = false
     private lateinit var bottomNavBar: CustomConstraintLayout
-    private lateinit var fab: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,9 +37,6 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             this.updateBottomNavBarVisibility(destination.id)
         }
-
-        this.fab = findViewById(R.id.fab)
-        this.fabVisibilityListener()
 
 
 /*        val register_button: Button = findViewById(R.id.register_button_main)
@@ -83,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fabVisibilityListener() {
+    /*private fun fabVisibilityListener() {
         // Add OnBackStackChangedListener to listen for fragment transactions
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navHostFragment.childFragmentManager.addOnBackStackChangedListener {
@@ -95,5 +91,5 @@ class MainActivity : AppCompatActivity() {
                 fab.visibility = View.GONE
             }
         }
-    }
+    }*/
 }

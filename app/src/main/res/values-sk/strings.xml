@@ -12,6 +12,12 @@
     <string name="login">Prihlásenie</string>
     <string name="registration">Registrácia</string>
     <string name="log_in">Prihlásiť</string>
+
+    <string name="forgotten_password">Zabudnuté heslo?</string>
+    <string name="reset_password_header">Obnovenie zabudnutého hesla</string>
+    <string name="reset_password_email">Zadajte registračný email</string>
+    <string name="reset_password_confirm">Potvrdiť</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mapbox_access_token">pk.eyJ1IjoibWlyZWMzMDAiLCJhIjoiY20xbDllNDI4MDVrNzJqcXZvZm83OGF3byJ9.vxwsTRLEq3Ypnm7TmH2FYQ</string>
@@ -49,6 +55,11 @@
     <string name="loginErrorNetwork">Prihlásenie sa nepodarilo. Skontrolujte pripojenie na internet.</string>
     <string name="loginErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
     <string name="loginSuccess">Prihlásenie bolo úspešné</string>
+
+    <string name="resetPasswordSuccess">Link na zmenu hesla bol poslaný na zadaný email.</string>
+    <string name="resetPasswordFailed">Požiadavka na reset hesla sa nepodarila.</string>
+    <string name="resetPasswordErrorNetwork">Požiadavka sa nepodarila. Skontrolujte pripojenie na internet.</string>
+    <string name="resetPasswordErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
 
     <string name="userErrorGetUserFailed">Používateľov sa nepodarilo získať</string>
     <string name="userErrorNetwork">Používateľov sa nepodarilo získať. Skontrolujte pripojenie na internet.</string>

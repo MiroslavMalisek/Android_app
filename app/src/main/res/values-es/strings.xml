@@ -12,6 +12,12 @@
     <string name="login">Inicio de sesión</string>
     <string name="registration">Registración</string>
     <string name="log_in">Iniciar sesión</string>
+
+    <string name="forgotten_password">Contraseňa olvidada?</string>
+    <string name="reset_password_header">Recuperación de la contraseňa</string>
+    <string name="reset_password_email">Introduzca su correo</string>
+    <string name="reset_password_confirm">Confirmar</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mapbox_access_token">pk.eyJ1IjoibWlyZWMzMDAiLCJhIjoiY20xbDllNDI4MDVrNzJqcXZvZm83OGF3byJ9.vxwsTRLEq3Ypnm7TmH2FYQ</string>
@@ -49,6 +55,11 @@
     <string name="loginErrorNetwork">El inicio de sesión ha fallado. Pruebe la conexión al internet.</string>
     <string name="loginErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
     <string name="loginSuccess">El inicio de sesión ha sido exitoso</string>
+
+    <string name="resetPasswordSuccess">El enlace para cambiar la contraseña ha sido enviado al correo electrónico proporcionado.</string>
+    <string name="resetPasswordFailed">La solicitud para el reset de la contraseňa ha fallado.</string>
+    <string name="resetPasswordErrorNetwork">La solicitud ha fallado. Pruebe la conexión al internet.</string>
+    <string name="resetPasswordErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
 
     <string name="userErrorGetUserFailed">No se han podido cargar los usuarios</string>
     <string name="userErrorNetwork">No se han podido cargar los usuarios. Pruebe la conexión al internet.</string>

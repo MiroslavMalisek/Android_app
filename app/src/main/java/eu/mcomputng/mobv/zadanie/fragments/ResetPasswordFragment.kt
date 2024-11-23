@@ -22,12 +22,13 @@ import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentLoginBinding
+import eu.mcomputng.mobv.zadanie.databinding.FragmentResetPasswordBinding
 import eu.mcomputng.mobv.zadanie.viewModels.AuthViewModel
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class ResetPasswordFragment : Fragment(R.layout.fragment_reset_password) {
 
     private lateinit var viewModel: AuthViewModel
-    private var binding: FragmentLoginBinding? = null
+    private var binding: FragmentResetPasswordBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,40 +43,31 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentLoginBinding.bind(view).apply {
+        binding = FragmentResetPasswordBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
         }.also { bnd ->
-            viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-                //login successful
-                if (result.localUser != null) {
-                    PreferenceData.getInstance().putUser(requireContext(), result.localUser)
-                    Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
-                    //viewModel.getUser(requireContext(), "20")
-                    //viewModel.getGeofence(requireContext())
-                    findNavController().navigate(R.id.action_login_to_map)
+            viewModel.resetPasswordResult.observe(viewLifecycleOwner) { result ->
+                //reset request successful
+                hideKeyboard(requireActivity())
+                //clear focus from text inputs after click
+                bnd.emailEdittext.clearFocus()
+                if (result.success) {
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_INDEFINITE).setAction("Login") {
+                        PreferenceData.getInstance().putResetPasswordUserEmail(requireContext(), viewModel.resetPasswordEmail.value.toString())
+                        viewModel.clearResetPassword()
+                        findNavController().navigate(R.id.action_reset_to_login)
+                    }.show()
                 } else {
                     if (result.message.isNotEmpty()){
-                        hideKeyboard(requireActivity())
-                        //clear focus from text inputs after login click
-                        bnd.usernameEdittext.clearFocus()
-                        bnd.passwordTextview.clearFocus()
                         Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
-                    }else{
-                        //when there was logout, there is no message and new login has to be done
                     }
                 }
             }
-
-            bnd.forgotPasswordText.setOnClickListener{
-                findNavController().navigate(R.id.action_login_to_reset)
-            }
-
             //hide keyboard and remove focus from inputs when user click on screen
             view.setOnTouchListener { _, _ ->
                 hideKeyboard(requireActivity()) // Hide keyboard
-                bnd.usernameEdittext.clearFocus()
-                bnd.passwordTextview.clearFocus()
+                bnd.emailEdittext.clearFocus()
                 false // Return false to allow other touch events to be processed
             }
         }
