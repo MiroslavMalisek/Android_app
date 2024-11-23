@@ -1,4 +1,4 @@
-package eu.mcomputng.mobv.zadanie.fragments
+package eu.mcomputng.mobv.zadanie.fragments.profile
 
 import android.Manifest
 import android.content.Context
@@ -6,12 +6,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils
-import eu.mcomputng.mobv.zadanie.bottomBar.CustomConstraintLayout
+import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentProfileBinding
@@ -29,7 +26,6 @@ import eu.mcomputng.mobv.zadanie.viewModels.ClearMultipleViewModels
 import eu.mcomputng.mobv.zadanie.viewModels.FeedViewModel
 import eu.mcomputng.mobv.zadanie.viewModels.MapViewModel
 import eu.mcomputng.mobv.zadanie.viewModels.ProfileViewModel
-import eu.mcomputng.mobv.zadanie.viewModels.ViewModelInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -77,7 +73,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fab: FloatingActionButton = requireActivity().findViewById(R.id.fab)
 
         binding = FragmentProfileBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
@@ -116,7 +111,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             viewModelProfile.userResult.observe(viewLifecycleOwner) {
                 if (it.message.isNotEmpty()) {
-                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).setAnchorView(fab).show()
+                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).setAnchorView(bnd.customFab).show()
                 }
             }
 
@@ -154,13 +149,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewModelProfile.deleteLocationResult.observe(viewLifecycleOwner){result ->
                 //delete of location failed
                 if (!result.success){
-                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).setAnchorView(fab).show()
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).setAnchorView(bnd.customFab).show()
                 }else{
                     Log.d("location deleted: ", result.success.toString())
                 }
                 //viewModelAuth.getGeofence(requireContext())
             }
 
+            //hide keyboard and remove focus from inputs when user click on screen
+            view.setOnTouchListener { _, _ ->
+                bnd.customFab.makeFabsInvisible()
+                false // Return false to allow other touch events to be processed
+            }
 
         }
     }

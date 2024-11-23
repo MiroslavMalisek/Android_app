@@ -37,6 +37,8 @@
     <string name="profile_load_button">Cargar pérfil</string>
     <string name="profile_share_location_label">Compartir mi posición</string>
     <string name="profile_logout_btn">Log out</string>
+    <string name="fab_edit_image">Editar foto</string>
+    <string name="fab_change_password">Cambiar la contraseňa</string>
 
 
     <string name="registerErrorRepeatPassword">Contraseňas no son iguales</string>

@@ -12,4 +12,8 @@
     <style name="RecyclerViewIconColor">
         <item name="android:tint">?attr/colorPrimary</item>
     </style>
+    <style name="SmallFabStyle">
+        <item name="backgroundTint">@color/gray_600</item>
+        <item name="tint">@color/gray_200</item>
+    </style>
 </resources>

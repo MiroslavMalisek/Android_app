@@ -36,6 +36,8 @@
     <string name="profile_load_button">Načítať profil</string>
     <string name="profile_share_location_label">Zdieľať moju polohu</string>
     <string name="profile_logout_btn">Odhlásiť sa</string>
+    <string name="fab_edit_image">Upraviť fotku</string>
+    <string name="fab_change_password">Zmeniť heslo</string>
 
 
     <string name="registerErrorRepeatPassword">Heslá sa nezhodujú</string>

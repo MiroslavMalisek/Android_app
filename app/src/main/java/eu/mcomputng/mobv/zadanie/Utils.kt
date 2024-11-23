@@ -5,9 +5,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.navOptions
-import eu.mcomputng.mobv.zadanie.fragments.feed.FeedFragment
-import eu.mcomputng.mobv.zadanie.fragments.MapFragment
-import eu.mcomputng.mobv.zadanie.fragments.ProfileFragment
+import eu.mcomputng.mobv.zadanie.fragments.profile.ProfileFragment
 import java.security.MessageDigest
 
 object Utils {
