@@ -50,6 +50,7 @@ class RegisterFragment : Fragment() {
             } else {
                 if (result.message.isNotEmpty()){
                     Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                    viewModel.clearRegisterResult()
                 }else{
                     //when there was logout, there is no message and new login has to be done
                 }

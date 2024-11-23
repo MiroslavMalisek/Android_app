@@ -53,14 +53,16 @@ class ResetPasswordFragment : Fragment(R.layout.fragment_reset_password) {
                 //clear focus from text inputs after click
                 bnd.emailEdittext.clearFocus()
                 if (result.success) {
-                    Snackbar.make(view, result.message, Snackbar.LENGTH_INDEFINITE).setAction("Login") {
-                        PreferenceData.getInstance().putResetPasswordUserEmail(requireContext(), viewModel.resetPasswordEmail.value.toString())
+                    PreferenceData.getInstance().putResetPasswordUserEmail(requireContext(), viewModel.resetPasswordEmail.value.toString())
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).setAction("Login") {
                         viewModel.clearResetPassword()
                         findNavController().navigate(R.id.action_reset_to_login)
                     }.show()
+                    viewModel.clearResetPassword()
                 } else {
                     if (result.message.isNotEmpty()){
                         Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                        viewModel.clearResetPasswordResult()
                     }
                 }
             }

@@ -88,6 +88,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 user?.let { storedUser ->
                     viewModelProfile.loadUser(requireContext(), storedUser.id)
                 }
+                Log.d("reset_preference", PreferenceData.getInstance().getResetPasswordUserEmail(requireContext()).toString())
             }
 
             bnd.logoutBtn.setOnClickListener {

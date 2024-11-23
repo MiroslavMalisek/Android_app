@@ -56,6 +56,7 @@
     <string name="loginErrorUnexpected">An unexpected error occurred. Try again...</string>
     <string name="loginSuccess">Log in was successful</string>
 
+    <string name="resetPasswordEmailEmpty">Email can not be empty</string>
     <string name="resetPasswordSuccess">The link to reset the password has been sent to the provided email.</string>
     <string name="resetPasswordFailed">The request to change the password has failed.</string>
     <string name="resetPasswordErrorNetwork">The request has failed. Check your internet connection.</string>

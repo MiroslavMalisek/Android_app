@@ -86,19 +86,24 @@ class DataRepository private constructor(
     }
 
 
-    suspend fun apiLoginUser(context: Context, username: String, password: String): LoginResultPair{
+    suspend fun apiLoginUser(doHashPassword: Boolean = true, context: Context, username: String, password: String): LoginResultPair{
         if (username.isEmpty()){
             return LoginResultPair(context.getString(R.string.loginErrorEmptyUsername), null)
         }
         if (password.isEmpty()){
             return LoginResultPair(context.getString(R.string.loginErrorEmptyPassword), null)
         }
-        val hashedPass = hashPassword(password)
+        val processedPassword: String = if (doHashPassword){
+            hashPassword(password)
+        }else{
+            password
+        }
+
         Log.d("login_credits", username)
-        Log.d("login_credits", hashedPass)
+        Log.d("login_credits", processedPassword)
         try {
             val response: Response<UserLoginResponse> = service.loginUser(UserLoginRequest(
-                username, hashedPass
+                username, processedPassword
             ))
             if (response.isSuccessful) {
                 response.body()?.let { jsonResponse ->
@@ -119,6 +124,9 @@ class DataRepository private constructor(
     }
 
     suspend fun apiResetPassword(context: Context, email: String): ResetPasswordResultPair{
+        if (email.isEmpty()){
+            return ResetPasswordResultPair(context.getString(R.string.resetPasswordEmailEmpty), false)
+        }
         try {
             val response: Response<ResetPasswordResponse> = service.resetPassword(
                 ResetPasswordRequest(email)

@@ -42,6 +42,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("reset email from login", PreferenceData.getInstance().getResetPasswordUserEmail(requireContext()).toString())
+
         binding = FragmentLoginBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
             model = viewModel
@@ -61,8 +63,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         bnd.usernameEdittext.clearFocus()
                         bnd.passwordTextview.clearFocus()
                         Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
+                        viewModel.clearLoginResult()
                     }else{
-                        //when there was logout, there is no message and new login has to be done
+                        //no user and no message
                     }
                 }
             }

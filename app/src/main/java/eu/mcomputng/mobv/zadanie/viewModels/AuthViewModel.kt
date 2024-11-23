@@ -1,12 +1,14 @@
 package eu.mcomputng.mobv.zadanie.viewModels
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.mcomputng.mobv.zadanie.data.DataRepository
+import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.data.models.LoginResultPair
 import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
 import eu.mcomputng.mobv.zadanie.data.models.ResetPasswordResultPair
@@ -35,11 +37,26 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), V
     }
 
     fun loginUser(view: View) {
-        viewModelScope.launch {
-            _loginResult.postValue(dataRepository.apiLoginUser(
-                view.context,
-                loginUsername.value ?: "",
-                loginPassword.value ?: ""))
+        val resetEmail: String? = PreferenceData.getInstance().getResetPasswordUserEmail(view.context)
+        if ((resetEmail == null) || (resetEmail != loginUsername.value)){
+            //there was no password reset request or the requested email is not the same as login email
+            Log.d("login with hash", "true")
+            viewModelScope.launch {
+                _loginResult.postValue(dataRepository.apiLoginUser(
+                    context = view.context,
+                    username = loginUsername.value ?: "",
+                    password = loginPassword.value ?: ""))
+            }
+        }else{
+            //login with the email that was requested to reset the password
+            Log.d("login with hash", "false")
+            viewModelScope.launch {
+                _loginResult.postValue(dataRepository.apiLoginUser(
+                    doHashPassword = false,
+                    context = view.context,
+                    username = loginUsername.value ?: "",
+                    password = loginPassword.value ?: ""))
+            }
         }
     }
 
@@ -68,10 +85,24 @@ class AuthViewModel(private val dataRepository: DataRepository) : ViewModel(), V
         _loginResult.postValue(LoginResultPair(""))
         loginUsername.postValue("")
         loginPassword.postValue("")
+        resetPasswordEmail.postValue("")
+        _resetPasswordResult.postValue(ResetPasswordResultPair(""))
+    }
+
+    fun clearLoginResult(){
+        _loginResult.postValue(LoginResultPair(""))
+    }
+
+    fun clearRegisterResult(){
+        _registrationResult.postValue(RegistrationResultPair(""))
     }
 
     fun clearResetPassword(){
         resetPasswordEmail.postValue("")
+        _resetPasswordResult.postValue(ResetPasswordResultPair())
+    }
+
+    fun clearResetPasswordResult(){
         _resetPasswordResult.postValue(ResetPasswordResultPair())
     }
 }
