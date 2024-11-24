@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
+import eu.mcomputng.mobv.zadanie.Utils.isAfterResetPassword
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentChangePasswordBinding
@@ -20,6 +21,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
 
     private lateinit var profileViewModel: ProfileViewModel
     private var binding: FragmentChangePasswordBinding? = null
+    private var backArrowVisibility: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +50,10 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 if (result.success) {
                     Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
                     profileViewModel.clearChangePassword()
-                    val user = PreferenceData.getInstance().getUser(requireContext())
-                    val emailResetPassword: String? = PreferenceData.getInstance().getResetPasswordUserEmail(requireContext())
-                    user?.let { storedUser ->
-                        if (emailResetPassword != null && (storedUser.username == emailResetPassword)) {
-                            //here we had successful password change after reset, redirect to map to not freeze
-                            PreferenceData.getInstance().putResetPasswordUserEmail(requireContext(), null)
-                            Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).show()
-                            profileViewModel.clearChangePassword()
-                            findNavController().navigate(R.id.action_change_password_to_map)
-
-                        }
+                    if (isAfterResetPassword(requireContext())){
+                        //redirect to map if there was a password reset
+                        PreferenceData.getInstance().putResetPasswordUserEmail(requireContext(), null)
+                        findNavController().navigate(R.id.action_change_password_to_map)
                     }
                 } else {
                     if (result.message.isNotEmpty()){
@@ -67,6 +62,17 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                     }
                 }
             }
+
+            if (isAfterResetPassword(requireContext())){
+                bnd.backArrow.visibility = View.INVISIBLE
+            }else{
+                bnd.backArrow.visibility = View.VISIBLE
+            }
+
+            bnd.backArrow.setOnClickListener{
+                findNavController().popBackStack()
+            }
+
             //hide keyboard and remove focus from inputs when user click on screen
             view.setOnTouchListener { _, _ ->
                 hideKeyboard(requireActivity()) // Hide keyboard

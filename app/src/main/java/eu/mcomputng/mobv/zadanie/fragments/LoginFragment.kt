@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
+import eu.mcomputng.mobv.zadanie.Utils.isAfterResetPassword
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.databinding.FragmentLoginBinding
@@ -53,8 +54,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 if (result.localUser != null) {
                     PreferenceData.getInstance().putUser(requireContext(), result.localUser)
                     Toast.makeText(context, result.message, Toast.LENGTH_LONG).show()
-                    val emailResetPassword: String? = PreferenceData.getInstance().getResetPasswordUserEmail(requireContext())
-                    if ((emailResetPassword != null) && (emailResetPassword == result.localUser.username)){
+                    if (isAfterResetPassword(requireContext())){
                         //navigate to change password when there was a password reset
                         Snackbar.make(view, "Pred pokračovaním si musíte zmeniť heslo", Snackbar.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_login_to_change_password)

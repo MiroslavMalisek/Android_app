@@ -128,7 +128,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
         android:text="@string/have_account"
-        android:textColor="@color/icon_active"
         android:textSize="16sp"
         android:paddingTop="8dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

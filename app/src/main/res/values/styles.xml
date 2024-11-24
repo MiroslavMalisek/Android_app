@@ -35,4 +35,7 @@
         <item name="backgroundTint">@color/gray_200</item>
         <item name="tint">@color/gray_600</item>
     </style>
+    <style name="backArrow">
+        <item name="tint">@color/icon_inactive</item>
+    </style>
 </resources>

@@ -5,6 +5,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.navOptions
+import eu.mcomputng.mobv.zadanie.data.PreferenceData
 import eu.mcomputng.mobv.zadanie.fragments.profile.ProfileFragment
 import java.security.MessageDigest
 
@@ -31,5 +32,17 @@ object Utils {
         if (view != null) {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    fun isAfterResetPassword(context: Context): Boolean {
+        val user = PreferenceData.getInstance().getUser(context)
+        val emailResetPassword: String? =
+            PreferenceData.getInstance().getResetPasswordUserEmail(context)
+        user?.let { storedUser ->
+            if (emailResetPassword != null && (storedUser.username == emailResetPassword)) {
+                return true
+            }
+        }
+        return false
     }
 }
