@@ -70,6 +70,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
             }
 
             bnd.backArrow.setOnClickListener{
+                profileViewModel.clearChangePassword()
                 findNavController().popBackStack()
             }
 

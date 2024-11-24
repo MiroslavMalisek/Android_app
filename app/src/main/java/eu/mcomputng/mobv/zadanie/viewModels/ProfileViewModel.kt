@@ -37,6 +37,8 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
 
     val sharingLocation = MutableLiveData<Boolean?>(null)
 
+    val galleryPermissionsGranted = MutableLiveData<Boolean?>(null)
+
     fun loadUser(context: Context, uid: String) {
         viewModelScope.launch {
             _userResult.postValue(dataRepository.apiGetUser(context, uid))
@@ -107,6 +109,7 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         _userResult.postValue(UserGetPair(""))
         _deleteLocationResult.postValue(UpdateLocationPair(""))
         sharingLocation.postValue(null)
+        galleryPermissionsGranted.postValue(null)
     }
 
     fun clearChangePassword(){

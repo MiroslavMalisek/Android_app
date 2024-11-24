@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_profile_to_change_password"
             app:destination="@id/navChangePasswordFragment"/>
+        <action
+            android:id="@+id/action_profile_to_photo_editor"
+            app:destination="@id/navPhotoEditor"/>
     </fragment>
 
     <fragment
@@ -101,6 +104,15 @@
         android:name="eu.mcomputng.mobv.zadanie.fragments.profile.ChangePasswordFragment">
         <action
             android:id="@+id/action_change_password_to_map"
+            app:destination="@id/navMapFragment"/>
+    </fragment>
+
+    <fragment
+        tools:layout="@layout/fragment_photo_editor"
+        android:id="@+id/navPhotoEditor"
+        android:name="eu.mcomputng.mobv.zadanie.fragments.profile.PhotoEditorFragment">
+        <action
+            android:id="@+id/action_photo_to_map"
             app:destination="@id/navMapFragment"/>
     </fragment>
 

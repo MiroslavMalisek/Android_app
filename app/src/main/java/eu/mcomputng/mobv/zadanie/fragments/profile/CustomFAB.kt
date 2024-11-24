@@ -46,9 +46,11 @@ class CustomFAB(context: Context, attrs: AttributeSet? = null) : ConstraintLayou
 
         fabEditImage.setOnClickListener{
             Log.d("image", "clicked")
+            this.navController.navigate(R.id.action_profile_to_photo_editor)
         }
         fabEditImageTextview.setOnClickListener{
             Log.d("imageView", "clicked")
+            this.navController.navigate(R.id.action_profile_to_photo_editor)
         }
         fabChangePassword.setOnClickListener{
             Log.d("password", "clicked")

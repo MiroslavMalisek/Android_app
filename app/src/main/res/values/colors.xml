@@ -11,4 +11,5 @@
     <item name="green_900" type="color">#1B5E20</item>
     <item name="icon_active" type="color">@color/green_400</item>
     <item name="icon_inactive" type="color">@color/gray_600</item>
+    <item name="delete_btn" type="color">#E53935</item>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <item name="icon_active" type="color">@color/green_900</item>
     <item name="icon_inactive" type="color">@color/gray_600</item>
+    <item name="delete_btn" type="color">#7c0900</item>
 </resources>

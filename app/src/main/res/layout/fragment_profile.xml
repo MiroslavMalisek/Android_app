@@ -26,34 +26,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/load_profile_btn"
-            android:text="@string/profile_load_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textProfile"
-            android:layout_marginTop="20dp"/>
-
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.userResult.user.name}"
-            app:layout_constraintTop_toBottomOf="@id/load_profile_btn"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/textProfile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="30dp"/>
 
         <TextView
             android:id="@+id/location_share_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile_share_location_label"
-            app:layout_constraintTop_toBottomOf="@id/profile_name"
+            app:layout_constraintTop_toTopOf="@id/location_switch"
+            app:layout_constraintBottom_toBottomOf="@id/location_switch"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="20dp"/>
 
         <androidx.appcompat.widget.SwitchCompat
@@ -62,9 +53,9 @@
             android:layout_height="wrap_content"
             android:checked="@={model.sharingLocation}"
             app:layout_constraintStart_toEndOf="@id/location_share_label"
-            app:layout_constraintBottom_toBottomOf="@id/location_share_label"
-            app:layout_constraintTop_toTopOf="@id/location_share_label"
+            app:layout_constraintTop_toBottomOf="@id/profile_name"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"/>
 
         <Button
@@ -73,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_logout_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/location_share_label"
+            app:layout_constraintTop_toBottomOf="@id/location_switch"
             android:layout_marginTop="30dp"
             android:layout_marginStart="20dp"
              />
@@ -82,8 +73,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             tools:context=".fragments.profile.CustomFAB"
             android:id="@+id/custom_fab"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

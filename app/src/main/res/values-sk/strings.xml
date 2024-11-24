@@ -90,4 +90,10 @@
     <string name="locationErrorDeleteNetwork">Polohu sa nepodarilo odstrániť. Skontrolujte pripojenie na internet.</string>
     <string name="locationErrorUpdateUnexpected">Neočakávaná chyba pri aktualizovaní polohy. Skúste to znovu...</string>
     <string name="locationErrorDeleteUnexpected">Neočakávaná chyba pri odstraňovaní polohy. Skúste to znovu...</string>
+
+    <string name="photoEditorText">Úprava profilovej fotky</string>
+    <string name="photoEditorNoPhoto">Aktuálne nemáte nastavenú profilovú fotku</string>
+    <string name="choosePhoto">Vybrať fotku z galérie</string>
+    <string name="confirmPhoto">Potvrdiť vybranú fotku</string>
+    <string name="deletePhoto">Vymazať vašu fotku</string>
 </resources>

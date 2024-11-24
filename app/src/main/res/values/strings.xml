@@ -89,4 +89,10 @@
     <string name="locationErrorDeleteNetwork">Failed to delete the location. Check your internet connection.</string>
     <string name="locationErrorUpdateUnexpected">An unexpected error occurred when updating the location. Try again...</string>
     <string name="locationErrorDeleteUnexpected">An unexpected error occurred when deleting the location. Try again...</string>
+
+    <string name="photoEditorText">Edit profile photo</string>
+    <string name="photoEditorNoPhoto">You dont have profile photo set</string>
+    <string name="choosePhoto">Select from gallery</string>
+    <string name="confirmPhoto">Confirm the photo</string>
+    <string name="deletePhoto">Delete your photo</string>
 </resources>

@@ -82,12 +82,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             bnd.customFab.setNavController(findNavController())
 
-            bnd.loadProfileBtn.setOnClickListener {
-                val user = PreferenceData.getInstance().getUser(requireContext())
-                user?.let { storedUser ->
-                    viewModelProfile.loadUser(requireContext(), storedUser.id)
-                }
-                Log.d("reset_preference", PreferenceData.getInstance().getResetPasswordUserEmail(requireContext()).toString())
+            val user = PreferenceData.getInstance().getUser(requireContext())
+            user?.let { storedUser ->
+                viewModelProfile.loadUser(requireContext(), storedUser.id)
             }
 
             bnd.logoutBtn.setOnClickListener {
@@ -187,6 +184,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         ))*/
     }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
 
 
 

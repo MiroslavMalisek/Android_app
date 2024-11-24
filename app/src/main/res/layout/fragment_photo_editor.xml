@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_back_arrow_foreground"
+            style="@style/backArrow" />
+
+        <TextView
+            android:id="@+id/photo_editor_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/photoEditorText"
+            android:textSize="25sp"
+            app:layout_constraintTop_toTopOf="@+id/back_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/back_arrow"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/photo_editor_no_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/photoEditorNoPhoto"
+            app:layout_constraintTop_toBottomOf="@+id/back_arrow"
+            app:layout_constraintBottom_toTopOf="@id/select_photo_icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/select_photo_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/photo_editor_no_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:srcCompat="@drawable/ic_add_photo_foreground"
+            style="@style/backArrow"
+            android:background="@drawable/recycler_view_item_background"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/photo_editor_preview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintTop_toBottomOf="@id/photo_editor_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/design_default_color_error"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/change_photo_btn"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/choosePhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photo_editor_preview"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            />
+
+        <!--<Button
+            android:id="@+id/confirm_photo_btn"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/confirmPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/select_photo_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/icon_active"
+            android:visibility="gone"
+            />-->
+
+        <Button
+            android:id="@+id/delete_photo_btn"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/deletePhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_photo_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/delete_btn"
+            android:visibility="gone"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

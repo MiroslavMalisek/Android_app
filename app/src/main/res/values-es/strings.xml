@@ -89,4 +89,10 @@
     <string name="locationErrorDeleteNetwork">No se ha podido eliminar la posición. Pruebe la conexión al internet.</string>
     <string name="locationErrorUpdateUnexpected">Error inesperado actualizando la posición. Inténtelo de nuevo...</string>
     <string name="locationErrorDeleteUnexpected">Error inesperado eliminando la posición. Inténtelo de nuevo...</string>
+
+    <string name="photoEditorText">Edición de foto de perfil</string>
+    <string name="photoEditorNoPhoto">No tiene ninguna foto de perfil</string>
+    <string name="choosePhoto">Seleccionar de la galería</string>
+    <string name="confirmPhoto">Confirmar la foto</string>
+    <string name="deletePhoto">Eliminar tu foto</string>
 </resources>
