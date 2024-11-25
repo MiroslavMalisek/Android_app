@@ -92,7 +92,7 @@
 
     <string name="photoEditorText">Edit profile photo</string>
     <string name="photoEditorNoPhoto">You dont have profile photo set</string>
-    <string name="choosePhoto">Select from gallery</string>
+    <string name="choosePhoto">Select another photo</string>
     <string name="confirmPhoto">Confirm the photo</string>
     <string name="deletePhoto">Delete your photo</string>
 </resources>

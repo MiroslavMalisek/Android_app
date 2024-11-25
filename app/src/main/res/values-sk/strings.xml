@@ -93,7 +93,7 @@
 
     <string name="photoEditorText">Úprava profilovej fotky</string>
     <string name="photoEditorNoPhoto">Aktuálne nemáte nastavenú profilovú fotku</string>
-    <string name="choosePhoto">Vybrať fotku z galérie</string>
+    <string name="choosePhoto">Vybrať inú fotku</string>
     <string name="confirmPhoto">Potvrdiť vybranú fotku</string>
     <string name="deletePhoto">Vymazať vašu fotku</string>
 </resources>

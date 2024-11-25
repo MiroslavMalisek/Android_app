@@ -92,7 +92,7 @@
 
     <string name="photoEditorText">Edición de foto de perfil</string>
     <string name="photoEditorNoPhoto">No tiene ninguna foto de perfil</string>
-    <string name="choosePhoto">Seleccionar de la galería</string>
+    <string name="choosePhoto">Seleccionar otra foto</string>
     <string name="confirmPhoto">Confirmar la foto</string>
     <string name="deletePhoto">Eliminar tu foto</string>
 </resources>

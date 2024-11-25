@@ -4,7 +4,7 @@
         <item name="android:background">@color/gray_900</item>
     </style>
     <style name="MyTextViewStyleDark" parent="MyTextViewStyle">
-        <item name="android:textColor">@color/gray_600</item>
+        <item name="android:textColor">@color/gray_200</item>
     </style>
     <style name="MyBottomNavBarIconsColor" parent="MyBottomNavBarIcons">
         <item name="android:tint">@color/icon_inactive</item>

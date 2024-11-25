@@ -19,6 +19,7 @@ import eu.mcomputng.mobv.zadanie.utils.Evento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel(), ViewModelInterface {
 

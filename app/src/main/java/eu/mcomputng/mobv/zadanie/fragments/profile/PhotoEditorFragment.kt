@@ -3,6 +3,7 @@ package eu.mcomputng.mobv.zadanie.fragments.profile
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,11 +22,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.databinding.FragmentPhotoEditorBinding
 import eu.mcomputng.mobv.zadanie.viewModels.ProfileViewModel
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
@@ -106,7 +113,10 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
             }
 
             bnd.changePhotoBtn.setOnClickListener{
-                Log.d("change", "click")
+                checkPermissions(requireContext())
+                if (viewModelProfile.galleryPermissionsGranted.value == true){
+                    openGallery()
+                }
             }
 
             bnd.deletePhotoBtn.setOnClickListener {
@@ -135,18 +145,43 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
                         bnd.photoEditorNoPhoto.visibility = View.VISIBLE
                         bnd.selectPhotoIcon.visibility = View.VISIBLE
                         bnd.photoEditorPreview.visibility = View.GONE
+                        bnd.confirmPhotoBtn.visibility = View.GONE
                         bnd.changePhotoBtn.visibility = View.GONE
                         bnd.deletePhotoBtn.visibility = View.GONE
                     }else{
                         bnd.photoEditorNoPhoto.visibility = View.GONE
                         bnd.selectPhotoIcon.visibility = View.GONE
                         bnd.photoEditorPreview.visibility = View.VISIBLE
+                        bnd.confirmPhotoBtn.visibility = View.VISIBLE
                         bnd.changePhotoBtn.visibility = View.VISIBLE
                         bnd.deletePhotoBtn.visibility = View.VISIBLE
                     }
                 }
             }
+
+            /*viewModelProfile.photoSelected.observe(viewLifecycleOwner){selectedPhoto->
+                selectedPhoto?.let {
+                    Log.d("change photo", selectedPhoto.absolutePath)
+                    this.displayPhoto(selectedPhoto)
+                    bnd.photoEditorNoPhoto.visibility = View.GONE
+                    bnd.selectPhotoIcon.visibility = View.GONE
+                    bnd.photoEditorPreview.visibility = View.VISIBLE
+                    bnd.changePhotoBtn.visibility = View.VISIBLE
+                    bnd.confirmPhotoBtn.visibility = View.VISIBLE
+                    bnd.deletePhotoBtn.visibility = View.GONE
+                }
+            }*/
         }
+    }
+
+    fun FragmentPhotoEditorBinding.showPreview(selectedPhoto: File) {
+        displayPhoto(selectedPhoto)
+        photoEditorNoPhoto.visibility = View.GONE
+        selectPhotoIcon.visibility = View.GONE
+        photoEditorPreview.visibility = View.VISIBLE
+        changePhotoBtn.visibility = View.VISIBLE
+        confirmPhotoBtn.visibility = View.VISIBLE
+        deletePhotoBtn.visibility = View.GONE
     }
 
    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -154,7 +189,12 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
         // photo picker.
         if (uri != null) {
             Log.d("PhotoPicker", "Selected URI: $uri")
-            //changePhoto(uri)
+            changePhoto(uri)?.let {
+                //chosen photo successfully
+                binding?.showPreview(it)
+            } ?: run {
+                Snackbar.make(requireView(), "Súbor sa nepodarilo načítať", Snackbar.LENGTH_LONG).show()
+            }
         } else {
             Log.d("PhotoPicker", "No media selected")
         }
@@ -172,7 +212,6 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
             )
         }
     }
-
 
     fun checkPermissions(context: Context) {
         //val check = allPermissionsGranted(context)
@@ -192,6 +231,58 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
 
     fun allPermissionsGranted(context: Context) = REQUIRED_PERMISSIONS().all {
         ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun inputStreamToFile(
+        uri: Uri,
+    ): File? {
+        val resolver = requireContext().applicationContext.contentResolver
+        resolver.openInputStream(uri).use { inputStream ->
+            var orig = File(requireContext().filesDir, "photo_copied.jpg")
+            if (orig.exists()) {
+                orig.delete()
+            }
+            orig = File(requireContext().filesDir, "photo_copied.jpg")
+
+            FileOutputStream(orig).use { fileOutputStream ->
+                if (inputStream == null) {
+                    Log.d("vybrane", "stream null")
+                    return null
+                }
+                try {
+                    Log.d("vybrane", "copied")
+                    inputStream.copyTo(fileOutputStream)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    return null
+                }
+            }
+            Log.d("vybrane", orig.absolutePath)
+            return orig
+        }
+
+    }
+
+    private fun changePhoto(file: Uri): File? {
+        inputStreamToFile(file)?.let {
+            Log.d("vybrane", "vybrane je $it")
+            return it
+        }
+        return null
+    }
+
+    private fun displayPhoto(file: File) {
+        val imageView = requireView().findViewById<ImageView>(R.id.photo_editor_preview)
+
+        Picasso.get()
+            .load(file)
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE)
+            //.placeholder(R.drawable.ic_placeholder) // Show a placeholder while loading
+            //.error(R.drawable.ic_error_placeholder) // Show an error image if loading fails
+            //.fit() // Resize the image to fit ImageView dimensions
+            //.centerCrop() // Center and crop the image to fill the bounds
+            .into(imageView)
     }
 
 
