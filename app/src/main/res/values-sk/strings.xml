@@ -94,6 +94,17 @@
     <string name="photoEditorText">Úprava profilovej fotky</string>
     <string name="photoEditorNoPhoto">Aktuálne nemáte nastavenú profilovú fotku</string>
     <string name="choosePhoto">Vybrať inú fotku</string>
+    <string name="newPhoto">Zmeniť profilovú fotku</string>
     <string name="confirmPhoto">Potvrdiť vybranú fotku</string>
     <string name="deletePhoto">Vymazať vašu fotku</string>
+
+    <string name="uploadPhotoSuccess">Profilová fotka bola zmenená</string>
+    <string name="uploadPhotoFailed">Fotku sa nepodarilo nahrať</string>
+    <string name="uploadPhotoErrorNetwork">Fotku sa nepodarilo nahrať. Skontrolujte pripojenie na internet.</string>
+    <string name="uploadPhotoErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
+
+    <string name="deletePhotoSuccess">Profilová fotka bola vymazaná</string>
+    <string name="deletePhotoFailed">Fotku sa nepodarilo vymazať</string>
+    <string name="deletePhotoErrorNetwork">Fotku sa nepodarilo vymazať. Skontrolujte pripojenie na internet.</string>
+    <string name="deletePhotoErrorUnexpected">Neočakávaná chyba. Skúste to znovu...</string>
 </resources>

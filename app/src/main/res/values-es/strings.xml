@@ -93,6 +93,17 @@
     <string name="photoEditorText">Edición de foto de perfil</string>
     <string name="photoEditorNoPhoto">No tiene ninguna foto de perfil</string>
     <string name="choosePhoto">Seleccionar otra foto</string>
+    <string name="newPhoto">Cambiar la foto de pérfil</string>
     <string name="confirmPhoto">Confirmar la foto</string>
     <string name="deletePhoto">Eliminar tu foto</string>
+
+    <string name="uploadPhotoSuccess">Foto de pérfil ha sido cambiada</string>
+    <string name="uploadPhotoFailed">Error al subir la foto</string>
+    <string name="uploadPhotoErrorNetwork">Error al subir la foto. Pruebe la conexión al internet.</string>
+    <string name="uploadPhotoErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
+
+    <string name="deletePhotoSuccess">Foto de pérfil ha sido eliminada</string>
+    <string name="deletePhotoFailed">Error al eliminar la foto</string>
+    <string name="deletePhotoErrorNetwork">Error al eliminar la foto. Pruebe la conexión al internet.</string>
+    <string name="deletePhotoErrorUnexpected">Error inesperado. Inténtelo de nuevo...</string>
 </resources>

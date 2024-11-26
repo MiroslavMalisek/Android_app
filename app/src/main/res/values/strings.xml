@@ -93,6 +93,17 @@
     <string name="photoEditorText">Edit profile photo</string>
     <string name="photoEditorNoPhoto">You dont have profile photo set</string>
     <string name="choosePhoto">Select another photo</string>
+    <string name="newPhoto">Change profile photo</string>
     <string name="confirmPhoto">Confirm the photo</string>
     <string name="deletePhoto">Delete your photo</string>
+
+    <string name="uploadPhotoSuccess">Profile photo has been changed</string>
+    <string name="uploadPhotoFailed">Photo upload has failed</string>
+    <string name="uploadPhotoErrorNetwork">Photo upload has failed. Check your internet connection.</string>
+    <string name="uploadPhotoErrorUnexpected">An unexpected error occurred. Try again...</string>
+
+    <string name="deletePhotoSuccess">Profile photo has been deleted</string>
+    <string name="deletePhotoFailed">Photo deletion has failed</string>
+    <string name="deletePhotoErrorNetwork">Photo deletion has failed. Check your internet connection.</string>
+    <string name="deletePhotoErrorUnexpected">An unexpected error occurred. Try again...</string>
 </resources>

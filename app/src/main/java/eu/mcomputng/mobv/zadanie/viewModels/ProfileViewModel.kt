@@ -10,12 +10,11 @@ import androidx.lifecycle.viewModelScope
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
-import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordRequest
 import eu.mcomputng.mobv.zadanie.data.models.ChangePasswordResultPair
-import eu.mcomputng.mobv.zadanie.data.models.ResetPasswordResultPair
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
+import eu.mcomputng.mobv.zadanie.data.models.ProfilePhotoPair
+import eu.mcomputng.mobv.zadanie.data.models.User
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
-import eu.mcomputng.mobv.zadanie.utils.Evento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,6 +30,15 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
 
     private val _changePasswordResult = MutableLiveData<ChangePasswordResultPair>()
     val changePasswordResult: LiveData<ChangePasswordResultPair> get() = _changePasswordResult
+
+    private val _photoBaseUri = MutableLiveData("https://upload.mcomputing.eu/")
+    val photoBaseUri: LiveData<String> get() = _photoBaseUri
+
+    private val _uploadProfilePhotoResult = MutableLiveData<ProfilePhotoPair>()
+    val uploadProfilePhotoResult: LiveData<ProfilePhotoPair> get() = _uploadProfilePhotoResult
+
+    private val _deleteProfilePhotoResult = MutableLiveData<ProfilePhotoPair>()
+    val deleteProfilePhotoResult: LiveData<ProfilePhotoPair> get() = _deleteProfilePhotoResult
 
     val changePasswordActualPassword = MutableLiveData<String>()
     val changePasswordNewPassword = MutableLiveData<String>()
@@ -106,21 +114,54 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         }
     }
 
+    fun uploadProfilePhoto(context: Context, image: File){
+        viewModelScope.launch {
+            val result = dataRepository.apiUploadProfilePhoto(context, image)
+            if (result.message == context.getString(R.string.uploadPhotoSuccess)){
+                updateUserAfterPhotoEdit(result)
+            }
+            _uploadProfilePhotoResult.postValue(result)
+        }
+    }
+
+    fun deleteProfilePhoto(context: Context){
+        viewModelScope.launch {
+            val result = dataRepository.apiDeleteProfilePhoto(context)
+            if (result.message == context.getString(R.string.deletePhotoSuccess)){
+                updateUserAfterPhotoEdit(result)
+            }
+            _deleteProfilePhotoResult.postValue(result)
+        }
+    }
+
+    private fun updateUserAfterPhotoEdit(result: ProfilePhotoPair){
+        _userResult.postValue(UserGetPair(
+            "", result.user?.let { User(it.id, result.user.name, result.user.photo) })
+        )
+    }
+
     override fun clear() {
         _userResult.postValue(UserGetPair(""))
         _deleteLocationResult.postValue(UpdateLocationPair(""))
         sharingLocation.postValue(null)
-        galleryPermissionsGranted.postValue(null)
+        clearChangePassword()
+        clearPhotoEditor()
     }
 
     fun clearChangePassword(){
         changePasswordActualPassword.postValue("")
         changePasswordNewPassword.postValue("")
         changePasswordRepeatPassword.postValue("")
-        _changePasswordResult.postValue(ChangePasswordResultPair())
+        clearChangePasswordResult()
     }
 
     fun clearChangePasswordResult(){
         _changePasswordResult.postValue(ChangePasswordResultPair())
+    }
+
+    fun clearPhotoEditor(){
+        _uploadProfilePhotoResult.postValue(ProfilePhotoPair())
+        _deleteProfilePhotoResult.postValue(ProfilePhotoPair())
+        galleryPermissionsGranted.postValue(null)
     }
 }

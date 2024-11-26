@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -38,6 +39,7 @@ import java.io.IOException
 class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
 
     private lateinit var viewModelProfile: ProfileViewModel
+    private var selectedPhoto: File? = null
     private var binding: FragmentPhotoEditorBinding? = null
 
     fun REQUIRED_PERMISSIONS(): Array<String> {
@@ -93,38 +95,72 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            // Handle the back button press
+            viewModelProfile.clearPhotoEditor()
+            findNavController().popBackStack()
+        }
 
         binding = FragmentPhotoEditorBinding.bind(view).apply {
             lifecycleOwner = viewLifecycleOwner
         }.also { bnd ->
 
             bnd.selectPhotoIcon.setOnClickListener{
-                Log.d("select", "click")
-
-                /*if (checkPermissions(requireContext(),true)) {
-                    openGallery()
-                }else{
-                    Log.d("Persmissions", "false")
-                }*/
                 checkPermissions(requireContext())
                 if (viewModelProfile.galleryPermissionsGranted.value == true){
                     openGallery()
                 }
             }
 
-            bnd.changePhotoBtn.setOnClickListener{
+            bnd.changeSelectedPhotoBtn.setOnClickListener{
                 checkPermissions(requireContext())
                 if (viewModelProfile.galleryPermissionsGranted.value == true){
                     openGallery()
+                }
+            }
+
+            bnd.changeProfilePhotoBtn.setOnClickListener {
+                checkPermissions(requireContext())
+                if (viewModelProfile.galleryPermissionsGranted.value == true){
+                    openGallery()
+                }
+            }
+
+            bnd.confirmPhotoBtn.setOnClickListener {
+                val photo = this.selectedPhoto
+                if (photo != null){
+                    viewModelProfile.uploadProfilePhoto(requireContext(), photo)
+                }else{
+                    Snackbar.make(requireView(), "Nebol vybraný žiadny súbor", Snackbar.LENGTH_LONG).show()
                 }
             }
 
             bnd.deletePhotoBtn.setOnClickListener {
                 Log.d("delete", "click")
+                if (viewModelProfile.userResult.value?.user?.photo?.isNotEmpty() == true){
+                    viewModelProfile.deleteProfilePhoto(requireContext())
+                }else{
+                    Snackbar.make(requireView(), "Nie je nastavená profilová fotka", Snackbar.LENGTH_LONG).show()
+                }
             }
 
             bnd.backArrow.setOnClickListener{
+                viewModelProfile.clearPhotoEditor()
                 findNavController().popBackStack()
+            }
+
+            viewModelProfile.uploadProfilePhotoResult.observe(viewLifecycleOwner){
+                if (it.message.isNotEmpty()) {
+                    Log.d("upload", it.message)
+                    Snackbar.make(requireView(), it.message, Snackbar.LENGTH_LONG).show()
+                }
+            }
+
+            viewModelProfile.deleteProfilePhotoResult.observe(viewLifecycleOwner){
+                if (it.message.isNotEmpty()) {
+                    Log.d("delete", it.message)
+                    Snackbar.make(requireView(), it.message, Snackbar.LENGTH_LONG).show()
+                }
             }
 
             /*viewModelProfile.galleryPermissionsGranted.observe(viewLifecycleOwner) {
@@ -141,19 +177,27 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
 
             viewModelProfile.userResult.observe(viewLifecycleOwner) {result ->
                 result?.let {
+                    //if local user doesnt have profile photo - show gallery selector
                     if (it.user?.photo?.isEmpty() == true){
                         bnd.photoEditorNoPhoto.visibility = View.VISIBLE
                         bnd.selectPhotoIcon.visibility = View.VISIBLE
                         bnd.photoEditorPreview.visibility = View.GONE
                         bnd.confirmPhotoBtn.visibility = View.GONE
-                        bnd.changePhotoBtn.visibility = View.GONE
+                        bnd.changeSelectedPhotoBtn.visibility = View.GONE
+                        bnd.changeProfilePhotoBtn.visibility = View.GONE
                         bnd.deletePhotoBtn.visibility = View.GONE
                     }else{
+                        //if has photo, show it and allow change and delete
+                        val photoBaseUri = viewModelProfile.photoBaseUri.value ?: "https://upload.mcomputing.eu/"
+                        val userPhoto = it.user?.photo
+                        Log.d("path", photoBaseUri+userPhoto)
+                        displayProfilePhoto(photoBaseUri + userPhoto)
                         bnd.photoEditorNoPhoto.visibility = View.GONE
                         bnd.selectPhotoIcon.visibility = View.GONE
+                        bnd.confirmPhotoBtn.visibility = View.GONE
+                        bnd.changeSelectedPhotoBtn.visibility = View.GONE
                         bnd.photoEditorPreview.visibility = View.VISIBLE
-                        bnd.confirmPhotoBtn.visibility = View.VISIBLE
-                        bnd.changePhotoBtn.visibility = View.VISIBLE
+                        bnd.changeProfilePhotoBtn.visibility = View.VISIBLE
                         bnd.deletePhotoBtn.visibility = View.VISIBLE
                     }
                 }
@@ -175,13 +219,14 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
     }
 
     fun FragmentPhotoEditorBinding.showPreview(selectedPhoto: File) {
-        displayPhoto(selectedPhoto)
+        displaySelectedPhoto(selectedPhoto)
         photoEditorNoPhoto.visibility = View.GONE
         selectPhotoIcon.visibility = View.GONE
-        photoEditorPreview.visibility = View.VISIBLE
-        changePhotoBtn.visibility = View.VISIBLE
-        confirmPhotoBtn.visibility = View.VISIBLE
+        changeProfilePhotoBtn.visibility = View.GONE
         deletePhotoBtn.visibility = View.GONE
+        photoEditorPreview.visibility = View.VISIBLE
+        changeSelectedPhotoBtn.visibility = View.VISIBLE
+        confirmPhotoBtn.visibility = View.VISIBLE
     }
 
    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -191,6 +236,7 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
             Log.d("PhotoPicker", "Selected URI: $uri")
             changePhoto(uri)?.let {
                 //chosen photo successfully
+                this.selectedPhoto = it
                 binding?.showPreview(it)
             } ?: run {
                 Snackbar.make(requireView(), "Súbor sa nepodarilo načítať", Snackbar.LENGTH_LONG).show()
@@ -271,7 +317,7 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
         return null
     }
 
-    private fun displayPhoto(file: File) {
+    private fun displaySelectedPhoto(file: File) {
         val imageView = requireView().findViewById<ImageView>(R.id.photo_editor_preview)
 
         Picasso.get()
@@ -280,8 +326,18 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
             .networkPolicy(NetworkPolicy.NO_CACHE)
             //.placeholder(R.drawable.ic_placeholder) // Show a placeholder while loading
             //.error(R.drawable.ic_error_placeholder) // Show an error image if loading fails
-            //.fit() // Resize the image to fit ImageView dimensions
-            //.centerCrop() // Center and crop the image to fill the bounds
+            .into(imageView)
+    }
+
+    private fun displayProfilePhoto(uri: String) {
+        val imageView = requireView().findViewById<ImageView>(R.id.photo_editor_preview)
+
+        Picasso.get()
+            .load(uri)
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .networkPolicy(NetworkPolicy.NO_CACHE)
+            //.placeholder(R.drawable.ic_placeholder) // Show a placeholder while loading
+            //.error(R.drawable.ic_error_placeholder) // Show an error image if loading fails
             .into(imageView)
     }
 

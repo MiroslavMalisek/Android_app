@@ -5,6 +5,7 @@ import android.util.Log
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils.hashPassword
 import eu.mcomputng.mobv.zadanie.data.api.ApiService
+import eu.mcomputng.mobv.zadanie.data.api.UploadService
 import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordRequest
 import eu.mcomputng.mobv.zadanie.data.api.dtos.ChangePasswordResponse
 import eu.mcomputng.mobv.zadanie.data.api.dtos.GeofenceResponse
@@ -26,14 +27,19 @@ import eu.mcomputng.mobv.zadanie.data.models.RegistrationResultPair
 import eu.mcomputng.mobv.zadanie.data.models.LocalUser
 import eu.mcomputng.mobv.zadanie.data.models.ResetPasswordResultPair
 import eu.mcomputng.mobv.zadanie.data.models.UpdateLocationPair
+import eu.mcomputng.mobv.zadanie.data.models.ProfilePhotoPair
 import eu.mcomputng.mobv.zadanie.data.models.User
 import eu.mcomputng.mobv.zadanie.data.models.UserGetPair
-import okhttp3.Call
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
+import java.io.File
 import java.io.IOException
 
 class DataRepository private constructor(
     private val service: ApiService,
+    private val uploadService: UploadService,
     private val cache: LocalCache
 ) {
     companion object {
@@ -46,7 +52,7 @@ class DataRepository private constructor(
         fun getInstance(context: Context): DataRepository =
             INSTANCE ?: synchronized(lock) {
                 INSTANCE
-                    ?: DataRepository(ApiService.create(context),
+                    ?: DataRepository(ApiService.create(context), UploadService.create(context),
                         LocalCache(AppRoomDatabase.getInstance(context).appDao())
                     ).also { INSTANCE = it }
             }
@@ -287,5 +293,47 @@ class DataRepository private constructor(
     }
 
     suspend fun deleteUsers() = cache.deleteUserItems()
+
+    suspend fun apiUploadProfilePhoto(context: Context, image: File): ProfilePhotoPair {
+        val requestFile = RequestBody.create("image/jpg".toMediaTypeOrNull(), image)
+        val body = MultipartBody.Part.createFormData("image", image.name, requestFile)
+        try {
+            val response: Response<UserResponse> = uploadService.uploadProfilePhoto(body)
+            Log.d("upload code", response.code().toString())
+            Log.d("upload body", response.body().toString())
+            if (response.isSuccessful) {
+                response.body()?.let { jsonResponse ->
+                    return ProfilePhotoPair(context.getString(R.string.uploadPhotoSuccess),
+                        User(jsonResponse.id, jsonResponse.name,jsonResponse.photo))
+                }
+            }
+            return ProfilePhotoPair(context.getString(R.string.uploadPhotoFailed), null)
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return ProfilePhotoPair(context.getString(R.string.uploadPhotoErrorNetwork), null)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ProfilePhotoPair(context.getString(R.string.uploadPhotoErrorUnexpected), null)
+    }
+
+    suspend fun apiDeleteProfilePhoto(context: Context): ProfilePhotoPair{
+        try {
+            val response: Response<UserResponse> = uploadService.deleteProfilePhoto()
+            if (response.isSuccessful) {
+                response.body()?.let { jsonResponse ->
+                    return ProfilePhotoPair(context.getString(R.string.deletePhotoSuccess),
+                        User(jsonResponse.id, jsonResponse.name,jsonResponse.photo))
+                }
+            }
+            return ProfilePhotoPair(context.getString(R.string.deletePhotoFailed), null)
+        }catch (ex: IOException) {
+            ex.printStackTrace()
+            return ProfilePhotoPair(context.getString(R.string.deletePhotoErrorNetwork), null)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ProfilePhotoPair(context.getString(R.string.deletePhotoErrorUnexpected), null)
+    }
 
 }

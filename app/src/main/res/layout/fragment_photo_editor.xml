@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/photoEditorText"
-            android:textSize="25sp"
+            android:textSize="20sp"
             app:layout_constraintTop_toTopOf="@+id/back_arrow"
             app:layout_constraintBottom_toBottomOf="@+id/back_arrow"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/photoEditorNoPhoto"
-            app:layout_constraintTop_toBottomOf="@+id/back_arrow"
+            app:layout_constraintTop_toBottomOf="@+id/top_frame"
             app:layout_constraintBottom_toTopOf="@id/select_photo_icon"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -74,7 +74,7 @@
             android:maxHeight="300dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            app:layout_constraintTop_toBottomOf="@id/photo_editor_textview"
+            app:layout_constraintTop_toBottomOf="@id/top_frame"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="20dp"
@@ -97,13 +97,25 @@
             />
 
         <Button
-            android:id="@+id/change_photo_btn"
+            android:id="@+id/change_selected_photo_btn"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/choosePhoto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirm_photo_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/change_profile_photo_btn"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/newPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photo_editor_preview"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
             />
@@ -116,7 +128,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/deletePhoto"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/change_photo_btn"
+            app:layout_constraintTop_toBottomOf="@+id/change_profile_photo_btn"
             app:layout_constraintEnd_toEndOf="parent"
             android:backgroundTint="@color/delete_btn"
             android:visibility="gone"
