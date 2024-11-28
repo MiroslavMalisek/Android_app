@@ -31,9 +31,6 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
     private val _changePasswordResult = MutableLiveData<ChangePasswordResultPair>()
     val changePasswordResult: LiveData<ChangePasswordResultPair> get() = _changePasswordResult
 
-    private val _photoBaseUri = MutableLiveData("https://upload.mcomputing.eu/")
-    val photoBaseUri: LiveData<String> get() = _photoBaseUri
-
     private val _uploadProfilePhotoResult = MutableLiveData<ProfilePhotoPair>()
     val uploadProfilePhotoResult: LiveData<ProfilePhotoPair> get() = _uploadProfilePhotoResult
 

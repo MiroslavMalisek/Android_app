@@ -3,6 +3,7 @@ package eu.mcomputng.mobv.zadanie.bottomBar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -12,60 +13,49 @@ import eu.mcomputng.mobv.zadanie.Utils
 
 class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private lateinit var navController: NavController
-    private lateinit var activeIcon: ImageView
+    private var activeIcon: ImageView
+    private var bottomBarVisible = false
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.bottom_bar_layout, this, true)
         val mapIcon: ImageView = findViewById(R.id.map_icon)
         this.activeIcon = mapIcon
         mapIcon.setOnClickListener{
-            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navMapFragment, mapIcon)
             this.navigateToFragment(this.navController.currentDestination?.id,
                 R.id.navMapFragment, mapIcon)
         }
         val feedIcon: ImageView = findViewById(R.id.feed_icon)
         feedIcon.setOnClickListener{
-            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navFeedFragment, feedIcon)
             this.navigateToFragment(this.navController.currentDestination?.id,
                 R.id.navFeedFragment, feedIcon)
         }
         val profileIcon: ImageView = findViewById(R.id.profile_icon)
         profileIcon.setOnClickListener{
-            //this.updateIconColor(this.navController.currentDestination?.id, R.id.navProfileFragment, profileIcon)
             this.navigateToFragment(this.navController.currentDestination?.id,
                 R.id.navProfileFragment, profileIcon)
         }
 
-
-
-
-        /*map_icon.setOnClickListener{
-            Snackbar.make(view, R.string.snackbar_text, Snackbar.LENGTH_LONG)
-                .setAction("Home"){
-                    findNavController().navigate(R.id.action_map_to_feed)
-                }.setAnchorView(R.id.fab)
-                .show()
-        }*/
-        /*val profile_icon: ImageView = findViewById(R.id.profile_icon)
-        profile_icon.setOnClickListener{
-            if (navController.currentDestination?.id == R.id.navProfileFragment){
-                Log.d("nav", "zhoda")
-
-            }
-            else{
-                Log.d("nav", "rozne")
-                navController.navigate(R.id.action_feed_to_profile)
-            }
-
-        }*/
     }
 
     fun setNavController(navController: NavController) {
         this.navController = navController
     }
 
+    fun updateBottomNavBarVisibility(destinationId: Int){
+        if (Utils.fragmentsWithBottomBar.contains(destinationId)){
+            this.updateBarIcons()
+            if (!bottomBarVisible){
+                this.visibility = View.VISIBLE
+            }
+            bottomBarVisible = true
+        }
+        else{
+            this.visibility = View.GONE
+            bottomBarVisible = false
+        }
+    }
+
     private fun navigateToFragment(currentFragment: Int?, destinationFragment: Int, icon: ImageView){
         if (currentFragment != destinationFragment){
-            this.updateIconsColor(icon)
             val action: Int = this.decideAction(currentFragment, destinationFragment)
             //dont save fragments with bottom bar to back stash
             this.navController.navigate(action, null, Utils.options)
@@ -94,34 +84,20 @@ class CustomConstraintLayout(context: Context, attrs: AttributeSet? = null) : Co
         }
     }
 
-    private fun updateIconsColor(icon: ImageView){
-        this.activeIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_inactive))
-        this.activeIcon = icon
-        icon.setColorFilter(ContextCompat.getColor(context, R.color.icon_active))
+    private fun updateBarIcons(){
+        if(this.navController.currentDestination?.id == R.id.navMapFragment){
+            updateIconsColor(findViewById(R.id.map_icon))
+        }else if (this.navController.currentDestination?.id == R.id.navFeedFragment){
+            updateIconsColor(findViewById(R.id.feed_icon))
+        }else if (this.navController.currentDestination?.id == R.id.navProfileFragment){
+            updateIconsColor(findViewById(R.id.profile_icon))
+        }
     }
 
-    fun restoreActiveIcon(){
-        this.activeIcon = findViewById(R.id.map_icon)
+    private fun updateIconsColor(icon: ImageView){
+        this.activeIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_inactive))
+        icon.setColorFilter(ContextCompat.getColor(context, R.color.icon_active))
+        this.activeIcon = icon
     }
-    /*fun updateVisibilityAndColorForFragment(destinationId: Int) {
-        Log.d("update", destinationId.toString())
-        if (Utils.fragmentsWithBottomBar.contains(destinationId)){
-            postDelayed({
-                visibility = View.VISIBLE
-            }, 200)
-        }
-        else{
-            visibility = View.GONE
-        }
-        /*when(destinationId){
-            R.id.navMapFragment -> {
-                postDelayed({
-                    visibility = View.VISIBLE
-                }, 200)
-            }
-            else -> {
-                visibility = View.GONE
-            }
-        }*/
-    }*/
+
 }

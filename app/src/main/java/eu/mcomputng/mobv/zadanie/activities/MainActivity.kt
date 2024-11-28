@@ -16,7 +16,6 @@ import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils
 
 class MainActivity : AppCompatActivity() {
-    private var bottomBarVisible = false
     private lateinit var bottomNavBar: CustomConstraintLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavBar.setNavController(navController)
         //on every screen change, check if bottom bar should be visible
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            this.updateBottomNavBarVisibility(destination.id)
+            bottomNavBar.updateBottomNavBarVisibility(destination.id)
         }
 
 
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 */  }
 
+    /*
     private fun updateInitialBottomBarIconColor(){
         val mapIcon: ImageView = findViewById(R.id.map_icon)
         mapIcon.setColorFilter(ContextCompat.getColor(this, R.color.icon_active))
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavBar.visibility = View.GONE
             bottomBarVisible = false
         }
-    }
+    }*/
 
     /*private fun fabVisibilityListener() {
         // Add OnBackStackChangedListener to listen for fragment transactions

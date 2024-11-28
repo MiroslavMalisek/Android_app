@@ -110,7 +110,8 @@ class FeedFragment : Fragment() {
                     feedAdapter.updateItems(it.map { user ->
                         ItemModel(
                             id = user.id.toInt(),
-                            imageResId = R.drawable.map_foreground, // Replace with appropriate logic
+                            //imageResId = R.drawable.person_foreground, // Replace with appropriate logic
+                            image = user.photo,
                             name = user.name,
                             updated = user.updated // Replace with actual timestamp field
                         )

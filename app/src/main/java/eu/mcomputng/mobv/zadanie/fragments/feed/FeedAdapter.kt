@@ -8,9 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import eu.mcomputng.mobv.zadanie.R
+import eu.mcomputng.mobv.zadanie.Utils.displayPhotoFromUri
+import eu.mcomputng.mobv.zadanie.Utils.PHOTOBASEURI
+
 
 //data class ItemModel(val imageResId: Int, val text: String)
-data class ItemModel(val id: Int, val imageResId: Int, val name: String, val updated: String){
+data class ItemModel(val id: Int, val image: String, val name: String, val updated: String){
     override fun equals(other: Any?): Boolean {
         if (this === other){
             return true
@@ -20,7 +23,7 @@ data class ItemModel(val id: Int, val imageResId: Int, val name: String, val upd
         }
         other as ItemModel
         if (id != other.id) return false
-        if (imageResId != other.imageResId) return false
+        if (image != other.image) return false
         if (name != other.name) return false
         if (updated != other.updated) return false
 
@@ -29,7 +32,7 @@ data class ItemModel(val id: Int, val imageResId: Int, val name: String, val upd
 
     override fun hashCode(): Int {
         var result = id
-        result = 31 * result + imageResId
+        result = 31 * result + image.hashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + updated.hashCode()
         return result
@@ -40,7 +43,8 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
     private var items: List<ItemModel> = listOf()
 
     class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.user_image)
+        val userPhotoView: ImageView = itemView.findViewById(R.id.user_photo)
+        val userIconView: ImageView = itemView.findViewById(R.id.user_icon)
         val nameView: TextView = itemView.findViewById(R.id.user_name)
         val updatedView: TextView = itemView.findViewById(R.id.user_updated)
     }
@@ -53,7 +57,15 @@ class FeedAdapter: RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val currentItem = items[position]
-        holder.imageView.setImageResource(currentItem.imageResId)
+        if (currentItem.image.isNotEmpty()){
+            holder.userPhotoView.visibility = View.VISIBLE
+            holder.userIconView.visibility = View.GONE
+            displayPhotoFromUri(holder.userPhotoView, PHOTOBASEURI + currentItem.image)
+        }else{
+            holder.userPhotoView.visibility = View.GONE
+            holder.userIconView.visibility = View.VISIBLE
+            holder.userIconView.setImageResource(R.drawable.person_foreground)
+        }
         holder.nameView.text = currentItem.name
         holder.updatedView.text = currentItem.updated
     }

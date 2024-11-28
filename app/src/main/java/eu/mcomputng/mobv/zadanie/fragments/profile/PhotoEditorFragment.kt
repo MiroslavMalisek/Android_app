@@ -23,9 +23,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.databinding.FragmentPhotoEditorBinding
@@ -34,6 +31,9 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import eu.mcomputng.mobv.zadanie.Utils.displayPhotoFromUri
+import eu.mcomputng.mobv.zadanie.Utils.displayPhotoFromFile
+import eu.mcomputng.mobv.zadanie.Utils.PHOTOBASEURI
 
 
 class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
@@ -188,10 +188,9 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
                         bnd.deletePhotoBtn.visibility = View.GONE
                     }else{
                         //if has photo, show it and allow change and delete
-                        val photoBaseUri = viewModelProfile.photoBaseUri.value ?: "https://upload.mcomputing.eu/"
                         val userPhoto = it.user?.photo
-                        Log.d("path", photoBaseUri+userPhoto)
-                        displayProfilePhoto(photoBaseUri + userPhoto)
+                        Log.d("path", PHOTOBASEURI+userPhoto)
+                        displayPhotoFromUri(bnd.photoEditorPreview, PHOTOBASEURI + userPhoto)
                         bnd.photoEditorNoPhoto.visibility = View.GONE
                         bnd.selectPhotoIcon.visibility = View.GONE
                         bnd.confirmPhotoBtn.visibility = View.GONE
@@ -219,7 +218,7 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
     }
 
     fun FragmentPhotoEditorBinding.showPreview(selectedPhoto: File) {
-        displaySelectedPhoto(selectedPhoto)
+        displayPhotoFromFile(photoEditorPreview, selectedPhoto)
         photoEditorNoPhoto.visibility = View.GONE
         selectPhotoIcon.visibility = View.GONE
         changeProfilePhotoBtn.visibility = View.GONE
@@ -316,31 +315,6 @@ class PhotoEditorFragment : Fragment(R.layout.fragment_photo_editor) {
         }
         return null
     }
-
-    private fun displaySelectedPhoto(file: File) {
-        val imageView = requireView().findViewById<ImageView>(R.id.photo_editor_preview)
-
-        Picasso.get()
-            .load(file)
-            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-            .networkPolicy(NetworkPolicy.NO_CACHE)
-            //.placeholder(R.drawable.ic_placeholder) // Show a placeholder while loading
-            //.error(R.drawable.ic_error_placeholder) // Show an error image if loading fails
-            .into(imageView)
-    }
-
-    private fun displayProfilePhoto(uri: String) {
-        val imageView = requireView().findViewById<ImageView>(R.id.photo_editor_preview)
-
-        Picasso.get()
-            .load(uri)
-            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-            .networkPolicy(NetworkPolicy.NO_CACHE)
-            //.placeholder(R.drawable.ic_placeholder) // Show a placeholder while loading
-            //.error(R.drawable.ic_error_placeholder) // Show an error image if loading fails
-            .into(imageView)
-    }
-
 
     override fun onDestroyView() {
         binding = null
