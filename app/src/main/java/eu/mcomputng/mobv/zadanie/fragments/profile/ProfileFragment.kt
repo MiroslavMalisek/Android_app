@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -14,10 +15,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.mapbox.maps.MapView
+import com.mapbox.maps.Style
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils
+import eu.mcomputng.mobv.zadanie.Utils.PHOTOBASEURI
+import eu.mcomputng.mobv.zadanie.Utils.displayPhotoFromUri
 import eu.mcomputng.mobv.zadanie.Utils.hideKeyboard
 import eu.mcomputng.mobv.zadanie.data.DataRepository
 import eu.mcomputng.mobv.zadanie.data.PreferenceData
@@ -35,20 +41,60 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var viewModelProfile: ProfileViewModel
     private var binding: FragmentProfileBinding? = null
-    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    private val PERMISSIONS_REQUIRED_LOCATION = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION)
+    private val PERMISSIONS_REQUIRED_BACKGROUND_LOCATION = arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+    private var mapView: MapView? = null
+    private val receiver = GeofenceBroadcastReceiver()
 
-    val requestPermissionLauncher =
+    val requestPermissionLauncherBackground =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
+            Log.d("launcher", isGranted.toString())
             if (!isGranted) {
+                disableBackgroundLocation()
+                Log.d("launcher BE", "no")
+                Toast.makeText(
+                    requireContext(),
+                    "Nie je povolený prístup k polohe na pozadí",
+                    Toast.LENGTH_LONG
+                ).show()
+            }else{
+                enableBackgroundLocation()
+                Log.d("launcher BE", "yes")
+            }
+        }
+
+    val requestPermissionLauncherLocation =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            val deniedPermissions = permissions.filterValues { !it }.keys
+            if (deniedPermissions.isNotEmpty()) {
+                // At least one permission is denied
                 disableSharingLocation()
+                Toast.makeText(
+                    requireContext(),
+                    "Nie je povolený prístup k polohe",
+                    Toast.LENGTH_LONG
+                ).show()
             }else{
                 enableSharingLocation()
             }
         }
 
-    fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
+    val requestPermissionLauncherLocationInBackground =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+        }
+
+    fun hasLocationPermissions(context: Context) = PERMISSIONS_REQUIRED_LOCATION.all {
+        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hasBackgroundLocationPermission(context: Context) = PERMISSIONS_REQUIRED_BACKGROUND_LOCATION.all {
         ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -58,6 +104,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun disableSharingLocation(){
         viewModelProfile.sharingLocation.postValue(false)
+    }
+
+    private fun enableBackgroundLocation(){
+        viewModelProfile.backgroundLocation.postValue(true)
+    }
+
+    private fun disableBackgroundLocation(){
+        viewModelProfile.backgroundLocation.postValue(false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +127,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var mapView: MapView? = view.findViewById(R.id.mapView)
+        mapView?.getMapboxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
 
 
         binding = FragmentProfileBinding.bind(view).apply {
@@ -110,9 +167,23 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 it.findNavController().navigate(R.id.action_profile_to_intro, null, Utils.options)*/
             }
 
-            viewModelProfile.userResult.observe(viewLifecycleOwner) {
-                if (it.message.isNotEmpty()) {
-                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).setAnchorView(bnd.customFab).show()
+            viewModelProfile.userResult.observe(viewLifecycleOwner) { result->
+                if (result.message.isNotEmpty()) {
+                    Snackbar.make(view, result.message, Snackbar.LENGTH_LONG).setAnchorView(bnd.customFab).show()
+                }
+                result?.let {
+                    //if local user doesnt have profile photo - show icon
+                    if (it.user?.photo?.isEmpty() == true){
+                        bnd.userPhoto.visibility = View.GONE
+                        bnd.userIcon.visibility = View.VISIBLE
+                    }else{
+                        //if has photo, show it
+                        val userPhoto = it.user?.photo
+                        Log.d("path", PHOTOBASEURI +userPhoto)
+                        displayPhotoFromUri(bnd.userPhoto, PHOTOBASEURI + userPhoto)
+                        bnd.userPhoto.visibility = View.VISIBLE
+                        bnd.userIcon.visibility = View.GONE
+                    }
                 }
             }
 
@@ -121,13 +192,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 PreferenceData.getInstance().getSharing(requireContext())
             )
 
+            //load initial background from preference data
+            viewModelProfile.backgroundLocation.postValue(
+                PreferenceData.getInstance().getBackgroundLocation(requireContext())
+            )
+
             viewModelProfile.sharingLocation.observe(viewLifecycleOwner) {
                 it?.let {
                     if (it) {
-                        if (!hasPermissions(requireContext())) {
+                        if (!hasLocationPermissions(requireContext())) {
                             disableSharingLocation()
-                            requestPermissionLauncher.launch(
-                                Manifest.permission.ACCESS_FINE_LOCATION
+                            requestPermissionLauncherLocation.launch(
+                                PERMISSIONS_REQUIRED_LOCATION
                             )
                         } else {
                             //has permissions and switch being turned on
@@ -146,6 +222,45 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                 }
             }
+
+            viewModelProfile.backgroundLocation.observe(viewLifecycleOwner) {
+                it?.let {
+                    if (it) {
+                        if (!hasLocationPermissions(requireContext())) {
+                            disableBackgroundLocation()
+                            requestPermissionLauncherLocationInBackground.launch(
+                                PERMISSIONS_REQUIRED_LOCATION
+                            )
+                        }else if (!hasBackgroundLocationPermission(requireContext())){
+                            disableBackgroundLocation()
+                            requestPermissionLauncherBackground.launch(
+                                PERMISSIONS_REQUIRED_BACKGROUND_LOCATION[0]
+                            )
+                        }
+                        else {
+                            //has permissions and switch being turned on
+                            if (!PreferenceData.getInstance().getBackgroundLocation(requireContext())){
+                                PreferenceData.getInstance().putBackgroundLocation(requireContext(), true)
+                                PreferenceData.getInstance().putLocationAcquired(requireContext(), false)
+                                val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+                                fusedLocationClient.lastLocation.addOnSuccessListener(requireActivity()) {
+                                    // Logika pre prácu s poslednou polohou
+                                    Log.d("ProfileFragment", "poloha posledna $it")
+                                    receiver.setupGeofence(it, requireContext())
+                                }
+                            }
+                        }
+                    } else {
+                        //switch is being turned off
+                        if (PreferenceData.getInstance().getBackgroundLocation(requireContext())){
+                            PreferenceData.getInstance().putBackgroundLocation(requireContext(), false)
+                            PreferenceData.getInstance().putLocationAcquired(requireContext(), false)
+                            receiver.removeGeofences(requireContext())
+                        }
+                    }
+                }
+            }
+
 
             viewModelProfile.deleteLocationResult.observe(viewLifecycleOwner){result ->
                 //delete of location failed

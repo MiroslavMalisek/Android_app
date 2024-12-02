@@ -43,6 +43,8 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
 
     val sharingLocation = MutableLiveData<Boolean?>(null)
 
+    val backgroundLocation = MutableLiveData<Boolean?>(null)
+
     val galleryPermissionsGranted = MutableLiveData<Boolean?>(null)
 
     fun loadUser(context: Context, uid: String) {
@@ -141,6 +143,7 @@ class ProfileViewModel(private val dataRepository: DataRepository) : ViewModel()
         _userResult.postValue(UserGetPair(""))
         _deleteLocationResult.postValue(UpdateLocationPair(""))
         sharingLocation.postValue(null)
+        backgroundLocation.postValue(null)
         clearChangePassword()
         clearPhotoEditor()
     }

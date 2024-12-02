@@ -77,5 +77,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.squareup.picasso:picasso:2.8")
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
 
 }

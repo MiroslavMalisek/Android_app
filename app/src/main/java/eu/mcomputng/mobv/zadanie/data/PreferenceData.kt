@@ -50,6 +50,20 @@ class PreferenceData private constructor() {
         return sharing
     }
 
+    fun putBackgroundLocation(context: Context?, background: Boolean) {
+        val sharedPref = getSharedPreferences(context) ?: return
+        val editor = sharedPref.edit()
+        editor.putBoolean(backgroundLocationKey, background)
+        editor.apply()
+    }
+
+    fun getBackgroundLocation(context: Context?): Boolean {
+        val sharedPref = getSharedPreferences(context) ?: return false
+        val sharing = sharedPref.getBoolean(backgroundLocationKey, false)
+
+        return sharing
+    }
+
     fun putLocationAcquired(context: Context?, locationAcquired: Boolean) {
         val sharedPref = getSharedPreferences(context) ?: return
         val editor = sharedPref.edit()
@@ -94,6 +108,7 @@ class PreferenceData private constructor() {
         private const val shpKey = "eu.mcomputing.mobv.zadanie"
         private const val userKey = "userKey"
         private const val sharingKey = "sharingKey"
+        private const val backgroundLocationKey = "backgroundLocationKey"
         private const val locationAcquiredKey = "locationAcquiredKey"
         private const val resetPasswordUserEmail = "resetUserEmail"
 
