@@ -222,7 +222,7 @@ class DataRepository private constructor(
             if (response.isSuccessful) {
                 response.body()?.let { jsonResponse ->
                     val users = jsonResponse.list
-                        //.filter { it.uid != jsonResponse.me.uid }
+                        .filter { it.uid != jsonResponse.me.uid }
                         .map {
                         UserEntity(
                             it.uid, it.name, it.updated,
@@ -245,6 +245,8 @@ class DataRepository private constructor(
     }
 
     fun getUsers() = cache.getUsers()
+
+    suspend fun getUsersList() = cache.getUsersList()
 
     suspend fun apiUpdateLocation(context: Context, lat: Double, lon: Double, radius: Double): UpdateLocationPair{
         try {

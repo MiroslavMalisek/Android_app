@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -53,9 +54,15 @@ class MapFragment : Fragment() {
     private var radius: Double = 100.0
     private var mapView: MapView? = null
 
-    private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    private val PERMISSIONS_REQUIRED_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
 
-    val requestPermissionLauncher =
+    fun PERMISSIONS_REQUIRED_NOFIFICATIONS(): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.POST_NOTIFICATIONS
+        } else ""
+    }
+
+    val requestLocationPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -67,8 +74,26 @@ class MapFragment : Fragment() {
             }
         }
 
-    fun hasPermissions(context: Context) = PERMISSIONS_REQUIRED.all {
-        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    val requestNotificationsPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {
+        }
+
+
+    fun hasLocationPermissions(context: Context): Boolean {
+        return ContextCompat.checkSelfPermission(context, PERMISSIONS_REQUIRED_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hasNotificationsPermissions(context: Context): Boolean {
+        val permission = PERMISSIONS_REQUIRED_NOFIFICATIONS()
+        return if (permission.isNotEmpty()) {
+            // If permission is not empty, check if it's granted
+            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        } else {
+            // If no permission is required (empty string), return true
+            true
+        }
     }
 
 
@@ -110,9 +135,16 @@ class MapFragment : Fragment() {
 
 
             bnd.myLocation.setOnClickListener {
-                if (!hasPermissions(requireContext())) {
-                    requestPermissionLauncher.launch(
-                        Manifest.permission.ACCESS_FINE_LOCATION
+                if (!hasNotificationsPermissions(requireContext())){
+                    if (PERMISSIONS_REQUIRED_NOFIFICATIONS().isNotEmpty()){
+                        requestNotificationsPermissionLauncher.launch(
+                            PERMISSIONS_REQUIRED_NOFIFICATIONS()
+                        )
+                    }
+                }
+                if (!hasLocationPermissions(requireContext())) {
+                    requestLocationPermissionLauncher.launch(
+                        PERMISSIONS_REQUIRED_LOCATION
                     )
                 } else {
                     if (mapViewModel.locationAcquired.value == true){
@@ -173,7 +205,7 @@ class MapFragment : Fragment() {
         )
         binding.mapView.getMapboxMap().loadStyleUri(
             Style.MAPBOX_STREETS){
-            if (hasPermissions(requireContext()) && mapViewModel.locationAcquired.value == true) {
+            if (hasLocationPermissions(requireContext()) && mapViewModel.locationAcquired.value == true) {
                 Log.d("start", "true")
                 initLocationComponent()
                 addLocationListeners()
@@ -182,7 +214,7 @@ class MapFragment : Fragment() {
         }
 
         binding.mapView.getMapboxMap().addOnMapClickListener {
-            if (hasPermissions(requireContext())) {
+            if (hasLocationPermissions(requireContext())) {
                 onCameraTrackingDismissed()
             }
             true

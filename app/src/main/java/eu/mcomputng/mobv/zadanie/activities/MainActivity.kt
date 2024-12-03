@@ -1,5 +1,9 @@
 package eu.mcomputng.mobv.zadanie.activities
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -11,12 +15,23 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import eu.mcomputng.mobv.zadanie.R
 import eu.mcomputng.mobv.zadanie.Utils
+import eu.mcomputng.mobv.zadanie.workers.FeedUpdateWorker
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavBar: CustomConstraintLayout
+    private val feedNotificationChannel: String = "feed-channel"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +42,43 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val navController = findNavController(R.id.nav_host_fragment)
+
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            this.createNotificationChannel()
+        }
+
+
+        //worker
+        val inputData = workDataOf("channel_id" to feedNotificationChannel)
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        /*val feedUpdateRepeatingWorker = PeriodicWorkRequestBuilder<FeedUpdateWorker>(
+            15, TimeUnit.MINUTES)
+            .setInputData(inputData)
+            .setInitialDelay(10, TimeUnit.SECONDS)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "FeedUpdate",
+            ExistingPeriodicWorkPolicy.KEEP, // or REPLACE
+            feedUpdateRepeatingWorker
+        )*/
+
+
+        val myWorkRequest = OneTimeWorkRequestBuilder<FeedUpdateWorker>()
+            .setInputData(inputData)
+            .setInitialDelay(15, TimeUnit.SECONDS)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(myWorkRequest)
 
         // Get the bottom navigation bar view
         bottomNavBar = findViewById(R.id.bottom_bar)
@@ -49,6 +101,27 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 */  }
+
+    private fun createNotificationChannel(){
+        val name = "MOBV Zadanie"
+        val descriptionText = "Popis notifikacie"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel_id = feedNotificationChannel
+
+        // Create a new NotificationChannel
+        val channel = NotificationChannel(channel_id, name, importance).apply {
+            description = descriptionText
+        }
+
+        // Register the channel with the system
+        val notificationManager: NotificationManager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Check if the channel already exists before creating it
+        if (notificationManager.getNotificationChannel(channel_id) == null) {
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
     /*
     private fun updateInitialBottomBarIconColor(){

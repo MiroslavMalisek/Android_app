@@ -3,6 +3,7 @@ package eu.mcomputng.mobv.zadanie.fragments.profile
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -47,6 +48,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var mapView: MapView? = null
     private val receiver = GeofenceBroadcastReceiver()
 
+    fun PERMISSIONS_REQUIRED_NOFIFICATIONS(): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.POST_NOTIFICATIONS
+        } else ""
+    }
+
     val requestPermissionLauncherBackground =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -84,6 +91,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
 
+    val requestNotificationsPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) {isGranted: Boolean ->
+            Log.d("launcher", "notif")
+            if (!isGranted) {
+                Log.d("launcher notif", "disabled")
+            }else{
+                enableBackgroundLocation()
+                Log.d("launcher notif", "granted")
+            }
+        }
+
     val requestPermissionLauncherLocationInBackground =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -96,6 +116,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     fun hasBackgroundLocationPermission(context: Context) = PERMISSIONS_REQUIRED_BACKGROUND_LOCATION.all {
         ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hasNotificationsPermissions(context: Context): Boolean {
+        val permission = PERMISSIONS_REQUIRED_NOFIFICATIONS()
+        return if (permission.isNotEmpty()) {
+            // If permission is not empty, check if it's granted
+            ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        } else {
+            // If no permission is required (empty string), return true
+            true
+        }
     }
 
     private fun enableSharingLocation(){
@@ -198,6 +229,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
 
             viewModelProfile.sharingLocation.observe(viewLifecycleOwner) {
+                if (!hasNotificationsPermissions(requireContext())){
+                    Log.d("notif", "no")
+                    if (PERMISSIONS_REQUIRED_NOFIFICATIONS().isNotEmpty()){
+                        Log.d("notif_perms", "not empty")
+                        requestNotificationsPermissionLauncher.launch(
+                            PERMISSIONS_REQUIRED_NOFIFICATIONS()
+                        )
+                    }
+                }else{
+                    Log.d("notif", "yes")
+                }
                 it?.let {
                     if (it) {
                         if (!hasLocationPermissions(requireContext())) {

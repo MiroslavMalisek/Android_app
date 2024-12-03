@@ -19,6 +19,9 @@ interface DbDao {
     @Query("select * from users")
     fun getUsers(): LiveData<List<UserEntity>?>
 
+    @Query("SELECT * FROM users")
+    suspend fun getUsersList(): List<UserEntity>
+
     @Query("delete from users")
     suspend fun deleteUserItems()
 
